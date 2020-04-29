@@ -2,22 +2,22 @@
   "name": "react-native-bloom-ad",
   "title": "React Native Bloom Ad",
   "version": "1.0.1",
-  "description": "TODO",
+  "description": "Bloom AD React-Native SDK",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/github_account/react-native-bloom-ad.git",
-    "baseUrl": "https://github.com/github_account/react-native-bloom-ad"
+    "url": "git+https://github.com/bloomadinc/react-native-bloom-ad",
+    "baseUrl": "https://github.com/bloomadinc/react-native-bloom-ad"
   },
   "keywords": [
     "react-native"
   ],
   "author": {
-    "name": "Your Name",
-    "email": "yourname@email.com"
+    "name": "maofaming",
+    "email": "maofaming@email.com"
   },
   "license": "MIT",
   "licenseFilename": "LICENSE",
