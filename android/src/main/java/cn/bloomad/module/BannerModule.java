@@ -23,7 +23,8 @@ public class BannerModule extends EventModule {
         ViewGroup viewGroup = (ViewGroup) params.get("viewGroup");
         Double width = (double) params.get("width");
         Double height = (double) params.get("height");
-        AdSdk.getInstance().loadBannerAd(mActivity, "b1", viewGroup, width.floatValue(), height.floatValue(),
+        String unitId = params.get("unitId").toString();
+        AdSdk.getInstance().loadBannerAd(mActivity, unitId, viewGroup, width.floatValue(), height.floatValue(),
                 new AdSdk.BannerAdListener() {
                     @Override
                     public void onAdLoad(String id, AdSdk.BannerAd ad) {

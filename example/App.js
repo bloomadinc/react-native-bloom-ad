@@ -9,7 +9,7 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Button} from 'react-native';
+import {StyleSheet, Text, View, Button, FlatList} from 'react-native';
 import BloomAd, {
   BannerView,
   NativeExpress,
@@ -20,13 +20,74 @@ const ThreeMin = 1000 * 60 * 3;
 
 BloomAd.init('ba0063bfbc1a5ad878')
   .then((res) => {
-    // BloomAd.showSplash();
+    BloomAd.showSplash();
   })
   .catch((error) => {
     console.log(error);
   });
 
 // BloomAd.showSplash();
+
+const defaultList = [
+  {type: 2},
+  {type: 2},
+  {type: 2},
+  {type: 2},
+  {type: 2},
+  {type: 2},
+  {type: 2},
+  {type: 2},
+  {type: 2},
+];
+
+class ExpreeAd extends Component {
+  constructor(props) {
+    super(props);
+    console.log(props.index);
+  }
+  componentWillUnmount() {
+    console.log('componentWillUnmount ExpreeAd', this.props.index);
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount ExpreeAd', this.props.index);
+  }
+
+  render() {
+    return (
+      <NativeExpress
+        style={{
+          width: 332,
+          height: 200,
+        }}
+        onChange={(params) => {
+          console.log(params);
+        }}
+      />
+    );
+  }
+}
+
+class TextView extends Component {
+  constructor(props) {
+    super(props);
+  }
+  componentWillUnmount() {
+    // console.log('componentWillUnmount TextView');
+  }
+
+  componentDidMount() {
+    // console.log('componentDidMount TextView');
+  }
+
+  render() {
+    return (
+      <View style={{width: 332, height: 200, backgroundColor: 'red'}}>
+        <Text>{this.props.index}</Text>
+      </View>
+    );
+  }
+}
 
 export default class App extends Component<{}> {
   constructor(props) {
@@ -37,11 +98,27 @@ export default class App extends Component<{}> {
       showDraw: false,
       winWidth: 0,
       winHeight: 0,
+      list: [...defaultList],
     };
   }
 
   setWindow = ({layout}) => {
     // console.log('layout', layout);
+  };
+
+  _renderItem = ({item, index}) => {
+    if (item.type !== 1) {
+      return <TextView index={index} />;
+    } else {
+      return <ExpreeAd index={index} />;
+    }
+  };
+
+  _onEndReached = () => {
+    console.log('end');
+    this.setState({
+      list: [...this.state.list, {type: 1}, ...defaultList],
+    });
   };
 
   render() {
@@ -212,6 +289,18 @@ export default class App extends Component<{}> {
             }}
           />
         )}
+        {/* <FlatList
+          style={{
+            position: 'absolute',
+            height: 500,
+            width: 332,
+          }}
+          data={this.state.list}
+          initialNumToRender={2}
+          onEndReachedThreshold={0.5}
+          onEndReached={this._onEndReached}
+          renderItem={this._renderItem}
+        /> */}
       </View>
     );
   }

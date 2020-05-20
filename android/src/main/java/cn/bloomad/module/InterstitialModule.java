@@ -17,7 +17,8 @@ public class InterstitialModule extends EventModule {
     @Override
     public void threadAction(Activity mActivity, Map params) {
         final float width = Float.parseFloat(params.get("width").toString());
-        AdSdk.getInstance().loadInterstitialAd(mActivity, "i1", width, new AdSdk.InterstitialAdListener() {
+        String unitId = params.get("unitId").toString();
+        AdSdk.getInstance().loadInterstitialAd(mActivity, unitId, width, new AdSdk.InterstitialAdListener() {
             @Override
             public void onAdLoad(String id) {
                 Log.d(TAG, "InterstitialAd onAdLoad");

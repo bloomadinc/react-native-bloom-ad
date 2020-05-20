@@ -34,6 +34,7 @@ function withComponent(WrappedComponent, selectData = {}) {
         width,
         height,
         unique,
+        unitId: props.unitId || selectData.unitId,
       };
     }
     onChange = (event) => {
@@ -76,14 +77,17 @@ function withComponent(WrappedComponent, selectData = {}) {
 export const BannerView = withComponent(BaseBanner, {
   ratio: 6.4,
   name: BANNER_VIEW,
+  unitId: "b1",
 });
 
 export const NativeExpress = withComponent(BaseNativeExpress, {
   ratio: 1.2,
   name: NATIVE_EXPRESS,
+  unitId: "n1",
 });
 
 export const DrawVideo = withComponent(BaseDrawVideo, {
   ratio: 1,
   name: DRAW_VIDEO,
+  unitId: "dv1",
 });

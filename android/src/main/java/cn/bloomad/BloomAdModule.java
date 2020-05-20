@@ -1,6 +1,7 @@
 package cn.bloomad;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -65,19 +66,21 @@ public class BloomAdModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void rewardVideo(String name) {
+    public void rewardVideo(String name, String unitId) {
         mActivity = getCurrentActivity();
         RewardVideoModule rewardVideoModule = new RewardVideoModule(reactContext, mActivity, name);
         Map<String, String> map = new HashMap<String, String>();
+        map.put("unitId",unitId);
         rewardVideoModule.action(map);
     }
 
     @ReactMethod
-    public void interstitial(String name, float width) {
+    public void interstitial(String name, float width, String unitId) {
         mActivity = getCurrentActivity();
         InterstitialModule interstitialModule = new InterstitialModule(reactContext, mActivity, name);
         Map<String, String> map = new HashMap<String, String>();
         map.put("width", Float.toString(width));
+        map.put("unitId",unitId);
         interstitialModule.action(map);
     }
 
@@ -88,10 +91,11 @@ public class BloomAdModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public void showSplash(final String name, final int interval) {
+    public void showSplash( String name,  int interval, String unitId) {
         mActivity = getCurrentActivity();
+        Log.d(TAG, "showSplash:" + unitId);
         SplashModule splashModule = new SplashModule(reactContext, mActivity, name);
-        splashModule.show(interval);
+        splashModule.show(interval, unitId);
     }
 
 

@@ -27,11 +27,13 @@ public class BannerViewManager extends BaseViewManager {
             // Log.i("Create View Instance", "setSize:" + sizeReadable.toString());
             String id = String.valueOf(bannerView.getId());
             String unique = sizeReadable.getString("unique");
+            String unitId = sizeReadable.getString("unitId");
 
             BannerModule bannerModule = new BannerModule(mCallerContext, mActivity, id);
             moduleManager.add(unique, bannerModule);
             HashMap<String, Object> map = sizeReadable.toHashMap();
             map.put("viewGroup", bannerView);
+            map.put("unitId", unitId);
             bannerModule.action(map);
         }
     }

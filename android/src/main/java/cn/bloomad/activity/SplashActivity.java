@@ -27,6 +27,7 @@ public class SplashActivity extends Activity {
     private FrameLayout mContainer;
     private boolean mPaused;
     private String id;
+    private String unitId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,14 @@ public class SplashActivity extends Activity {
         }
 
         setContentView(R.layout.activity_splash);
+
+        Intent intent = getIntent();
+        String uid = intent.getStringExtra("unitId");
+        if(uid.length() > 0){
+            unitId = uid;
+        } else {
+            unitId = "s1";
+        }
 
         addContainer();
 
@@ -75,7 +84,9 @@ public class SplashActivity extends Activity {
         mPaused = true;
     }
 
-    /** 开屏页一定要禁止用户对返回按钮的控制，否则将可能导致用户手动退出了 App 而广告无法正常曝光和计费 */
+    /**
+     * 开屏页一定要禁止用户对返回按钮的控制，否则将可能导致用户手动退出了 App 而广告无法正常曝光和计费
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME) {
@@ -94,22 +105,22 @@ public class SplashActivity extends Activity {
     }
 
     private void loadSplashAd() {
-        AdSdk.getInstance().loadSplashAd(this, "s1", mContainer, SPLASH_LOAD_TIMEOUT, new AdSdk.SplashAdListener() {
+        AdSdk.getInstance().loadSplashAd(this, unitId, mContainer, SPLASH_LOAD_TIMEOUT, new AdSdk.SplashAdListener() {
             @Override
             public void onAdShow(String id) {
                 SplashActivity.this.id = id;
 
-                Log.i(TAG,"onAdShow: " + id );
+                Log.i(TAG, "onAdShow: " + id);
             }
 
             @Override
             public void onAdClick(String id) {
-                Log.i(TAG,"onAdClick: " + id );
+                Log.i(TAG, "onAdClick: " + id);
             }
 
             @Override
             public void onAdDismiss(String id) {
-                Log.i(TAG,"onAdDismiss: " + id );
+                Log.i(TAG, "onAdDismiss: " + id);
                 if (!mPaused) {
                     next(id, 0, null);
                 }
@@ -117,7 +128,7 @@ public class SplashActivity extends Activity {
 
             @Override
             public void onError(String id, int code, String message) {
-                Log.i(TAG,"onError: " + id );
+                Log.i(TAG, "onError: " + id);
                 next(id, code, message);
             }
         });

@@ -3,9 +3,7 @@ package cn.bloomad.module;
 import android.app.Activity;
 import android.util.Log;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
-import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
@@ -13,8 +11,6 @@ import com.linkin.adsdk.AdSdk;
 
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Nullable;
 
 public class NativeExpressModule extends EventModule {
     private AdSdk.NativeExpressAd mNativeExpressAd;
@@ -27,7 +23,8 @@ public class NativeExpressModule extends EventModule {
     public void threadAction(final Activity mActivity, Map params) {
         final ViewGroup viewGroup = (ViewGroup) params.get("viewGroup");
         final float width = Float.parseFloat(params.get("width").toString());
-        AdSdk.getInstance().loadNativeExpressAd(mActivity, "n1", width, 1,
+        String unitId = params.get("unitId").toString();
+        AdSdk.getInstance().loadNativeExpressAd(mActivity, unitId, width, 1,
                 new AdSdk.NativeExpressAdListener() {
                     @Override
                     public void onAdLoad(List<AdSdk.NativeExpressAd> ads) {

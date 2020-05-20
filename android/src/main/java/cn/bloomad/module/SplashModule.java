@@ -50,7 +50,7 @@ public class SplashModule extends EventModule {
         }
     }
 
-    public void show(final int interval){
+    public void show(final int interval, final  String unitId){
         minSplashInterval = interval;
 
         if (minSplashInterval <= 0) {
@@ -58,6 +58,7 @@ public class SplashModule extends EventModule {
         }
 
         Intent intent = new Intent(mActivity, SplashActivity.class);
+        intent.putExtra("unitId", unitId);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); // 无动画
         mActivity.startActivityForResult(intent, BLOOM_AD_REQUEST);
     }

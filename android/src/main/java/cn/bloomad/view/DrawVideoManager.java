@@ -26,11 +26,13 @@ public class DrawVideoManager extends BaseViewManager {
             String id = String.valueOf(containerView.getId());
             // Log.i("Create View Instance", "bannerView id:" + id);
             String unique = sizeReadable.getString("unique");
+            String unitId = sizeReadable.getString("unitId");
 
             DrawVideoModule drawVideoModule = new DrawVideoModule(mCallerContext, mActivity, id);
             moduleManager.add(unique, drawVideoModule);
             HashMap<String, Object> map = sizeReadable.toHashMap();
             map.put("viewGroup", containerView);
+            map.put("unitId", unitId);
             drawVideoModule.action(map);
         }
     }

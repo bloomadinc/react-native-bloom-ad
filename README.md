@@ -10,11 +10,29 @@ AppId：应用程序 id，以 ba 开头的 18 位 hex 字符串，如 ba0063bfbc
 
 ## SDK 集成
 
+### 1、添加 NPM
+
 `$ npm install react-native-bloom-ad --save`
 
 或
 
 `$ yarn add react-native-bloom-ad --save`
+
+### 2、添加 Maven 仓库地址
+
+```
+allprojects {
+    repositories {
+        maven {
+            credentials {
+                username 'iqLuKm'
+                password 'pomH01oYcR'
+            }
+            url 'https://repo.rdc.aliyun.com/repository/117933-release-sPkE7F/'
+        }
+    }
+}
+```
 
 ## SDK 使用
 
@@ -64,16 +82,21 @@ params 参数说明：
 
 ```javascript
 const interval = 1000 * 60 * 3; // 设置时间间隔，单位是毫秒，切到后台后超过间隔返回时重新加载开屏
-BloomAd.showSplash(interval, {
-  onAdDismiss(params) {
-    // 广告被关闭
-    console.log(params);
+const unitId = "s1";
+BloomAd.showSplash(
+  interval,
+  {
+    onAdDismiss(params) {
+      // 广告被关闭
+      console.log(params);
+    },
+    onError(params) {
+      // 广告出错
+      console.log(params);
+    },
   },
-  onError(params) {
-    // 广告出错
-    console.log(params);
-  },
-});
+  unitId
+);
 ```
 
 **强烈建议**：App 切到后台超过三分钟返回时加载开屏，以提升开屏广告的曝光量.
@@ -85,40 +108,44 @@ BloomAd.showSplash(interval, {
 使用接口调用，调用示例如下：
 
 ```javascript
-BloomAd.rewardVideo({
-  onAdLoad(params) {
-    // 广告加载成功
-    console.log(params);
+const unitId = "rv1";
+BloomAd.rewardVideo(
+  {
+    onAdLoad(params) {
+      // 广告加载成功
+      console.log(params);
+    },
+    onVideoCached(params) {
+      // 视频素材缓存成功
+      console.log(params);
+    },
+    onAdShow(params) {
+      // 广告页面展示
+      console.log(params);
+    },
+    onReward(params) {
+      // 广告激励发放
+      console.log(params);
+    },
+    onAdClick(params) {
+      // 广告被点击
+      console.log(params);
+    },
+    onVideoComplete(params) {
+      // 广告播放完毕
+      console.log(params);
+    },
+    onAdClose(params) {
+      // 广告被关闭
+      console.log(params);
+    },
+    onError(params) {
+      // 广告出错
+      console.log(params);
+    },
   },
-  onVideoCached(params) {
-    // 视频素材缓存成功
-    console.log(params);
-  },
-  onAdShow(params) {
-    // 广告页面展示
-    console.log(params);
-  },
-  onReward(params) {
-    // 广告激励发放
-    console.log(params);
-  },
-  onAdClick(params) {
-    // 广告被点击
-    console.log(params);
-  },
-  onVideoComplete(params) {
-    // 广告播放完毕
-    console.log(params);
-  },
-  onAdClose(params) {
-    // 广告被关闭
-    console.log(params);
-  },
-  onError(params) {
-    // 广告出错
-    console.log(params);
-  },
-});
+  unitId
+);
 ```
 
 ## 横幅广告接入
@@ -128,15 +155,17 @@ Banner 广告（横幅广告）位于 app 顶部、中部、底部任意一处�
 使用组件方式调试，调用示例如下：
 
 ```javascript
+const unitId = "b1";
 <BannerView
   style={{
     width: 332,
     height: 52,
   }}
+  unitId={unitId}
   onChange={(params) => {
     console.log(params);
   }}
-/>
+/>;
 ```
 
 params.type 说明：
@@ -156,15 +185,17 @@ params.type 说明：
 使用组件方式调试，调用示例如下：
 
 ```javascript
+const unitId = "n1";
 <NativeExpress
   style={{
     width: 332,
     height: 200,
   }}
+  unitId={unitId}
   onChange={(params) => {
     console.log(params);
   }}
-/>
+/>;
 ```
 
 params.type 说明：
@@ -185,28 +216,33 @@ params.type 说明：
 
 ```javascript
 const width = 300; // 插屏广告广告宽度
-BloomAd.interstitial(width, {
-  onAdLoad(params) {
-    // 广告加载成功
-    console.log(params);
+const unitId = "i1";
+BloomAd.interstitial(
+  width,
+  {
+    onAdLoad(params) {
+      // 广告加载成功
+      console.log(params);
+    },
+    onAdShow(params) {
+      // 广告页面展示
+      console.log(params);
+    },
+    onAdClick(params) {
+      // 广告被点击
+      console.log(params);
+    },
+    onAdClose(params) {
+      // 广告被关闭
+      console.log(params);
+    },
+    onError(params) {
+      // 广告出错
+      console.log(params);
+    },
   },
-  onAdShow(params) {
-    // 广告页面展示
-    console.log(params);
-  },
-  onAdClick(params) {
-    // 广告被点击
-    console.log(params);
-  },
-  onAdClose(params) {
-    // 广告被关闭
-    console.log(params);
-  },
-  onError(params) {
-    // 广告出错
-    console.log(params);
-  },
-});
+  unitId
+);
 ```
 
 ## Draw 视频广告接入
@@ -216,16 +252,18 @@ BloomAd.interstitial(width, {
 使用组件方式调试，调用示例如下：
 
 ```javascript
+const unitId = "dv1";
 <DrawVideo
   style={{
     width: "100%",
     height: "100%",
     position: "absolute",
   }}
+  unitId={unitId}
   onChange={(params) => {
     console.log(params);
   }}
-/>
+/>;
 ```
 
 params.type 说明：

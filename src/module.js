@@ -42,17 +42,18 @@ export default {
           params[data.type](data);
         }
       });
+      console.log("args:", ...args);
       BloomAd[actionName](eventName, ...args);
       return emiter;
     }
   },
-  rewardVideo(params = {}) {
-    return this.baseModule(REWAED_VIDEO, params);
+  rewardVideo(params = {}, unitId = "rv1") {
+    return this.baseModule(REWAED_VIDEO, params, unitId);
   },
-  showSplash(time = SplashTime, params = {}) {
-    return this.baseModule(SHOW_SPLASH, params, time);
+  showSplash(time = SplashTime, params = {}, unitId = "s1") {
+    return this.baseModule(SHOW_SPLASH, params, time, unitId);
   },
-  interstitial(width = 300, params = {}) {
-    return this.baseModule(INTERSTITIAL, params, width);
+  interstitial(width = 300, params = {}, unitId = "i1") {
+    return this.baseModule(INTERSTITIAL, params, width, unitId);
   },
 };

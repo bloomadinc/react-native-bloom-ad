@@ -34,5 +34,13 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://www.jitpack.io' }
+
+        maven {
+            credentials {
+                username 'iqLuKm'
+                password 'pomH01oYcR'
+            }
+            url 'https://repo.rdc.aliyun.com/repository/117933-release-sPkE7F/'
+        }
     }
 }

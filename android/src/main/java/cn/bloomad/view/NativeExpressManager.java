@@ -30,11 +30,13 @@ public class NativeExpressManager extends BaseViewManager {
             String id = String.valueOf(containerView.getId());
             // Log.i("Create View Instance", "bannerView id:" + id);
             String unique = sizeReadable.getString("unique");
+            String unitId = sizeReadable.getString("unitId");
 
             NativeExpressModule nativeExpressModule = new NativeExpressModule(mCallerContext, mActivity, id);
             moduleManager.add(unique, nativeExpressModule);
             HashMap<String, Object> map = sizeReadable.toHashMap();
             map.put("viewGroup", containerView);
+            map.put("unitId", unitId);
             nativeExpressModule.action(map);
         }
     }
