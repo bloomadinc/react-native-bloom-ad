@@ -166,10 +166,10 @@ public class VideoModule extends EventModule {
             // viewGroup.post(new Runnable() {
             //     @Override
             //     public void run() {
-            fm.beginTransaction().show(fragment).commitAllowingStateLoss();
-            if (mDrawVideoFragment != null) {
-                mDrawVideoFragment.onHiddenChanged(!play);
-            }
+            // fm.beginTransaction().show(fragment).commitAllowingStateLoss();
+            // if (mDrawVideoFragment != null) {
+            //     mDrawVideoFragment.onHiddenChanged(!play);
+            // }
             //     }
             // });
         }
