@@ -1,7 +1,7 @@
 {
   "name": "react-native-bloom-ad",
   "title": "React Native Bloom Ad",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Bloom AD React-Native SDK",
   "main": "index.js",
   "scripts": {
