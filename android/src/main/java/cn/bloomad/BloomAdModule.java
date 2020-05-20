@@ -10,6 +10,8 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.uimanager.IllegalViewOperationException;
 import com.linkin.adsdk.AdConfig;
 import com.linkin.adsdk.AdSdk;
+import com.linkin.videosdk.VideoConfig;
+import com.linkin.videosdk.VideoSdk;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,8 +44,24 @@ public class BloomAdModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void init(String appId, Promise promise) {
         try {
+            // AdSdk 在 VideoSdk 之前初始化，视频流中才能展现广告
             AdSdk.getInstance().init(reactContext,
-                    new AdConfig.Builder().appId(appId).multiProcess(false).debug(BuildConfig.DEBUG).build(), null);
+                    new AdConfig.Builder()
+                            .appId(appId)
+                            // .userId("uid") // 未登录可不设置 userId，登录时再设置
+                            .multiProcess(false)
+                            .debug(BuildConfig.DEBUG)
+                            .build(),
+                    null);
+
+            VideoSdk.getInstance().init(reactContext,
+                    new VideoConfig.Builder()
+                            .appId(appId)
+                            // .userId("uid") // 未登录可不设置 userId，登录时再设置
+                            .debug(BuildConfig.DEBUG)
+                            .build(),
+                    null);
+
             promise.resolve(appId);
         } catch (IllegalViewOperationException e) {
             promise.reject(e);

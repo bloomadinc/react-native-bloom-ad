@@ -1,6 +1,7 @@
 import { NativeModules, NativeEventEmitter } from "react-native";
 import { setInit, checkInit, getInit, getEventName } from "./utils";
 
+console.log("NativeModules", NativeModules);
 const { BloomAd } = NativeModules;
 const eventEmitter = new NativeEventEmitter(BloomAd);
 const SplashTime = 1000 * 60 * 3;

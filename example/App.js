@@ -8,302 +8,249 @@
  * https://github.com/facebook/react-native
  */
 
-import React, {Component} from 'react';
-import {StyleSheet, Text, View, Button, FlatList} from 'react-native';
+import React, {useState} from 'react';
+import {Platform, StyleSheet, Button, View, Dimensions} from 'react-native';
+import {NavigationContainer, useFocusEffect} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
 import BloomAd, {
   BannerView,
   NativeExpress,
   DrawVideo,
+  VideoStreaming,
 } from 'react-native-bloom-ad';
+import {set} from 'react-native-reanimated';
+
+BloomAd.init('ba0063bfbc1a5ad878');
+//   .then((res) => {
+//     BloomAd.showSplash();
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//   });
 
 const ThreeMin = 1000 * 60 * 3;
 
-BloomAd.init('ba0063bfbc1a5ad878')
-  .then((res) => {
-    BloomAd.showSplash();
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+const {width, height} = Dimensions.get('window');
 
-// BloomAd.showSplash();
+function HomeScreen() {
+  const [play, setPlay] = useState(true);
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      console.log('focus');
+      setPlay(true);
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+        console.log('unfocus');
+        setPlay(false);
+      };
+    }, []),
+  );
 
-const defaultList = [
-  {type: 2},
-  {type: 2},
-  {type: 2},
-  {type: 2},
-  {type: 2},
-  {type: 2},
-  {type: 2},
-  {type: 2},
-  {type: 2},
-];
-
-class ExpreeAd extends Component {
-  constructor(props) {
-    super(props);
-    console.log(props.index);
-  }
-  componentWillUnmount() {
-    console.log('componentWillUnmount ExpreeAd', this.props.index);
-  }
-
-  componentDidMount() {
-    console.log('componentDidMount ExpreeAd', this.props.index);
-  }
-
-  render() {
-    return (
-      <NativeExpress
+  return (
+    <View style={styles.container}>
+      <VideoStreaming
+        appId="ba0063bfbc1a5ad878"
         style={{
-          width: 332,
-          height: 200,
+          width: width,
+          height: height,
+          backgroundColor: 'blue',
         }}
+        play={play}
         onChange={(params) => {
-          console.log(params);
+          console.log('params', params);
         }}
       />
-    );
-  }
+    </View>
+  );
 }
 
-class TextView extends Component {
-  constructor(props) {
-    super(props);
-  }
-  componentWillUnmount() {
-    // console.log('componentWillUnmount TextView');
-  }
+function SettingsScreen() {
+  const [showBanner, setShowBanner] = useState(false);
+  const [showNative, setShowNative] = useState(false);
+  const [showDraw, setShowDraw] = useState(false);
 
-  componentDidMount() {
-    // console.log('componentDidMount TextView');
-  }
-
-  render() {
-    return (
-      <View style={{width: 332, height: 200, backgroundColor: 'red'}}>
-        <Text>{this.props.index}</Text>
-      </View>
-    );
-  }
-}
-
-export default class App extends Component<{}> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showBanner: false,
-      showNative: false,
-      showDraw: false,
-      winWidth: 0,
-      winHeight: 0,
-      list: [...defaultList],
-    };
-  }
-
-  setWindow = ({layout}) => {
-    // console.log('layout', layout);
-  };
-
-  _renderItem = ({item, index}) => {
-    if (item.type !== 1) {
-      return <TextView index={index} />;
-    } else {
-      return <ExpreeAd index={index} />;
-    }
-  };
-
-  _onEndReached = () => {
-    console.log('end');
-    this.setState({
-      list: [...this.state.list, {type: 1}, ...defaultList],
-    });
-  };
-
-  render() {
-    return (
-      <View
-        style={styles.main}
-        onLayout={(event) => {
-          this.setWindow(event.nativeEvent);
-        }}>
-        <View style={styles.container}>
-          <View style={styles.buttonItem}>
-            <Button
-              onPress={() => {
-                BloomAd.showSplash(ThreeMin, {
-                  // onAdShow(params) {
-                  //   console.log(params);
-                  // },
-                  // onAdClick(params) {
-                  //   console.log(params);
-                  // },
-                  onAdDismiss(params) {
-                    // 广告被关闭
-                    console.log(params);
-                  },
-                  onError(params) {
-                    // 广告出错
-                    console.log(params);
-                  },
-                });
-              }}
-              title="开屏广告"
-            />
-          </View>
-          <View style={styles.buttonItem}>
-            <Button
-              onPress={() => {
-                BloomAd.rewardVideo({
-                  onAdLoad(params) {
-                    // 广告加载成功
-                    console.log(params);
-                  },
-                  onVideoCached(params) {
-                    // 视频素材缓存成功
-                    console.log(params);
-                  },
-                  onAdShow(params) {
-                    // 广告页面展示
-                    console.log(params);
-                  },
-                  onReward(params) {
-                    // 广告激励发放
-                    console.log(params);
-                  },
-                  onAdClick(params) {
-                    // 广告被点击
-                    console.log(params);
-                  },
-                  onVideoComplete(params) {
-                    // 广告播放完毕
-                    console.log(params);
-                  },
-                  onAdClose(params) {
-                    // 广告被关闭
-                    console.log(params);
-                  },
-                  onError(params) {
-                    // 广告出错
-                    console.log(params);
-                  },
-                });
-              }}
-              title="激励视频广告"
-            />
-          </View>
-          <View style={styles.buttonItem}>
-            <Button
-              onPress={() => {
-                this.setState({
-                  showBanner: !this.state.showBanner,
-                });
-              }}
-              title="横幅广告"
-            />
-            {this.state.showBanner && (
-              <BannerView
-                style={{
-                  width: 332,
-                  height: 52,
-                }}
-                onChange={(params) => {
+  return (
+    <View
+      style={styles.main}
+      onLayout={(event) => {
+        // this.setWindow(event.nativeEvent);
+      }}>
+      <View style={styles.container}>
+        <View style={styles.buttonItem}>
+          <Button
+            onPress={() => {
+              BloomAd.showSplash(ThreeMin, {
+                // onAdShow(params) {
+                //   console.log(params);
+                // },
+                // onAdClick(params) {
+                //   console.log(params);
+                // },
+                onAdDismiss(params) {
+                  // 广告被关闭
                   console.log(params);
-                }}
-              />
-            )}
-          </View>
-          <View style={styles.buttonItem}>
-            <Button
-              onPress={() => {
-                this.setState({
-                  showNative: !this.state.showNative,
-                });
-              }}
-              title="原生广告"
-            />
-            {this.state.showNative && (
-              <NativeExpress
-                style={{
-                  width: 332,
-                  height: 200,
-                }}
-                onChange={(params) => {
+                },
+                onError(params) {
+                  // 广告出错
                   console.log(params);
-                }}
-              />
-            )}
-          </View>
-
-          <View style={styles.buttonItem}>
-            <Button
-              onPress={() => {
-                BloomAd.interstitial(300, {
-                  onAdLoad(params) {
-                    // 广告加载成功
-                    console.log(params);
-                  },
-                  onAdShow(params) {
-                    // 广告页面展示
-                    console.log(params);
-                  },
-                  onAdClick(params) {
-                    // 广告被点击
-                    console.log(params);
-                  },
-                  onAdClose(params) {
-                    // 广告被关闭
-                    console.log(params);
-                  },
-                  onError(params) {
-                    // 广告出错
-                    console.log(params);
-                  },
-                });
-              }}
-              title="插屏广告"
-            />
-          </View>
-
-          <View style={styles.buttonItem}>
-            <Button
-              onPress={() => {
-                this.setState({
-                  showDraw: !this.state.showDraw,
-                });
-              }}
-              title="Draw 视频广告"
-            />
-          </View>
-        </View>
-        {this.state.showDraw && (
-          <DrawVideo
-            style={{
-              width: '100%',
-              height: '100%',
-              position: 'absolute',
+                },
+              });
             }}
-            onChange={(params) => {
-              console.log(params);
-            }}
+            title="开屏广告"
           />
-        )}
-        {/* <FlatList
-          style={{
-            position: 'absolute',
-            height: 500,
-            width: 332,
-          }}
-          data={this.state.list}
-          initialNumToRender={2}
-          onEndReachedThreshold={0.5}
-          onEndReached={this._onEndReached}
-          renderItem={this._renderItem}
-        /> */}
+        </View>
+        <View style={styles.buttonItem}>
+          <Button
+            onPress={() => {
+              BloomAd.rewardVideo({
+                onAdLoad(params) {
+                  // 广告加载成功
+                  console.log(params);
+                },
+                onVideoCached(params) {
+                  // 视频素材缓存成功
+                  console.log(params);
+                },
+                onAdShow(params) {
+                  // 广告页面展示
+                  console.log(params);
+                },
+                onReward(params) {
+                  // 广告激励发放
+                  console.log(params);
+                },
+                onAdClick(params) {
+                  // 广告被点击
+                  console.log(params);
+                },
+                onVideoComplete(params) {
+                  // 广告播放完毕
+                  console.log(params);
+                },
+                onAdClose(params) {
+                  // 广告被关闭
+                  console.log(params);
+                },
+                onError(params) {
+                  // 广告出错
+                  console.log(params);
+                },
+              });
+            }}
+            title="激励视频广告"
+          />
+        </View>
+        <View style={styles.buttonItem}>
+          <Button
+            onPress={() => {
+              setShowBanner(!showBanner);
+            }}
+            title="横幅广告"
+          />
+          {showBanner && (
+            <BannerView
+              style={{
+                width: 332,
+                height: 52,
+              }}
+              onChange={(params) => {
+                console.log(params);
+              }}
+            />
+          )}
+        </View>
+        <View style={styles.buttonItem}>
+          <Button
+            onPress={() => {
+              setShowNative(!showNative);
+            }}
+            title="原生广告"
+          />
+          {showNative && (
+            <NativeExpress
+              style={{
+                width: 332,
+                height: 200,
+              }}
+              onChange={(params) => {
+                console.log(params);
+              }}
+            />
+          )}
+        </View>
+
+        <View style={styles.buttonItem}>
+          <Button
+            onPress={() => {
+              BloomAd.interstitial(300, {
+                onAdLoad(params) {
+                  // 广告加载成功
+                  console.log(params);
+                },
+                onAdShow(params) {
+                  // 广告页面展示
+                  console.log(params);
+                },
+                onAdClick(params) {
+                  // 广告被点击
+                  console.log(params);
+                },
+                onAdClose(params) {
+                  // 广告被关闭
+                  console.log(params);
+                },
+                onError(params) {
+                  // 广告出错
+                  console.log(params);
+                },
+              });
+            }}
+            title="插屏广告"
+          />
+        </View>
+
+        <View style={styles.buttonItem}>
+          <Button
+            onPress={() => {
+              this.setState({
+                showDraw: !this.state.showDraw,
+              });
+              setShowDraw(!showDraw);
+            }}
+            title="Draw 视频广告"
+          />
+        </View>
       </View>
-    );
-  }
+      {showDraw && (
+        <DrawVideo
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+          }}
+          onChange={(params) => {
+            console.log(params);
+          }}
+        />
+      )}
+    </View>
+  );
+}
+
+const Tab = createBottomTabNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Settings" component={SettingsScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
 }
 
 const styles = StyleSheet.create({

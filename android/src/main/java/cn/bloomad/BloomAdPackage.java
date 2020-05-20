@@ -1,18 +1,19 @@
 package cn.bloomad;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import cn.bloomad.view.BannerViewManager;
 import cn.bloomad.view.DrawVideoManager;
 import cn.bloomad.view.NativeExpressManager;
+import cn.bloomad.view.VideoManager;
 
 public class BloomAdPackage implements ReactPackage {
 
@@ -27,11 +28,8 @@ public class BloomAdPackage implements ReactPackage {
 
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-        return Arrays.<ViewManager>asList(
-                new BannerViewManager(reactContext),
-                new NativeExpressManager(reactContext),
-                new DrawVideoManager(reactContext)
-        );
+        return Arrays.<ViewManager>asList(new BannerViewManager(reactContext), new NativeExpressManager(reactContext),
+                new DrawVideoManager(reactContext), new VideoManager(reactContext));
     }
 
 }
