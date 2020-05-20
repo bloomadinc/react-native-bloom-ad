@@ -41,6 +41,7 @@ import BloomAd, {
   BannerView,
   NativeExpress,
   DrawVideo,
+  VideoStreaming,
 } from "react-native-bloom-ad";
 
 // TODO: What to do with the module?
