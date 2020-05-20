@@ -42,7 +42,7 @@ public class SplashActivity extends Activity {
 
         Intent intent = getIntent();
         String uid = intent.getStringExtra("unitId");
-        if(uid.length() > 0){
+        if(uid != null && uid.length() > 0){
             unitId = uid;
         } else {
             unitId = "s1";

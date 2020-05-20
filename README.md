@@ -278,3 +278,44 @@ params.type 说明：
 | onVideoResume   | 广告播放恢复 |
 | onVideoComplete | 广告播放完毕 |
 | onError         | 广告出错     |
+
+## 视频流接入
+
+开发者需要初始化 AppId 后才能使用相关功能。例如：
+
+```javascript
+<VideoStreaming
+  appId="ba0063bfbc1a5ad878"
+  style={{
+    width: width,
+    height: height,
+    backgroundColor: "blue",
+  }}
+  play={true}
+  onChange={(params) => {
+    console.log("params", params);
+  }}
+/>
+```
+
+### params 参数说明：
+
+| 参数      | 说明           | 类型   | 说明               |
+| --------- | -------------- | ------ | ------------------ |
+| type      | 广告状态       | string | -                  |
+| id        | 视频 Id        | string | -                  |
+| videoType | 视频类型       | string | 1:视频，2:广告     |
+| code      | 返回的错误代码 | int    | type 为 onError 时 |
+| message   | 返回的错误消息 | string | type 为 onError 时 |
+
+params.type 说明：
+
+| type            | 说明           |
+| --------------- | -------------- |
+| onVideoShow     | 视频切换展示   |
+| onVideoStart    | 播放开始       |
+| onVideoPause    | 播放暂停       |
+| onVideoResume   | 播放恢复       |
+| onVideoComplete | 播放完成       |
+| onVideoError    | 播放出错       |
+| onLikeClick     | 点赞或取消点赞 |
