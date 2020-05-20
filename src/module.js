@@ -1,7 +1,7 @@
 import { NativeModules, NativeEventEmitter } from "react-native";
 import { setInit, checkInit, getInit, getEventName } from "./utils";
 
-console.log("NativeModules", NativeModules);
+// console.log("NativeModules", NativeModules);
 const { BloomAd } = NativeModules;
 const eventEmitter = new NativeEventEmitter(BloomAd);
 const SplashTime = 1000 * 60 * 3;
@@ -43,7 +43,7 @@ export default {
           params[data.type](data);
         }
       });
-      console.log("args:", ...args);
+      // console.log("args:", ...args);
       BloomAd[actionName](eventName, ...args);
       return emiter;
     }

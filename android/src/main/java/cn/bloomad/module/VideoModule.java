@@ -162,14 +162,16 @@ public class VideoModule extends EventModule {
                 }
             });
         } else {
-//            final Fragment finalFragment1 = fragment;
-//            viewGroup.post(new Runnable() {
-//               @Override
-//               public void run() {
+            // final Fragment finalFragment1 = fragment;
+            // viewGroup.post(new Runnable() {
+            //     @Override
+            //     public void run() {
             fm.beginTransaction().show(fragment).commitAllowingStateLoss();
-//               }
-//           });
-            mDrawVideoFragment.onHiddenChanged(!play);
+            if (mDrawVideoFragment != null) {
+                mDrawVideoFragment.onHiddenChanged(!play);
+            }
+            //     }
+            // });
         }
     }
 
@@ -179,13 +181,13 @@ public class VideoModule extends EventModule {
                 event);
     }
 
-    public void playVideo(final boolean isPlay){
+    public void playVideo(final boolean isPlay) {
         Log.d(TAG, "playVideo");
         if (mActivity != null) {
             mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(mDrawVideoFragment != null){
+                    if (mDrawVideoFragment != null) {
                         mDrawVideoFragment.onHiddenChanged(!isPlay);
                     }
                 }

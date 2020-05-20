@@ -19,15 +19,14 @@ import BloomAd, {
   DrawVideo,
   VideoStreaming,
 } from 'react-native-bloom-ad';
-import {set} from 'react-native-reanimated';
 
 BloomAd.init('ba0063bfbc1a5ad878');
-//   .then((res) => {
-//     BloomAd.showSplash();
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
+// .then((res) => {
+//   BloomAd.showSplash();
+// })
+// .catch((error) => {
+//   console.log(error);
+// });
 
 const ThreeMin = 1000 * 60 * 3;
 
