@@ -43,9 +43,6 @@ import BloomAd, {
   DrawVideo,
   VideoStreaming,
 } from "react-native-bloom-ad";
-
-// TODO: What to do with the module?
-BloomAd;
 ```
 
 ## SDK 初始化
@@ -62,6 +59,18 @@ BloomAd.init("ba0063bfbc1a5ad878")
     // 初始化失败
     console.log(error);
   });
+```
+
+登录时请设置 userId：
+
+```
+BloomAd.setUserId("uid");
+```
+
+退出登录请重置 userId：
+
+```
+BloomAd.setUserId(null);
 ```
 
 ## SDK 返回参数说明
@@ -83,21 +92,18 @@ params 参数说明：
 
 ```javascript
 const interval = 1000 * 60 * 3; // 设置时间间隔，单位是毫秒，切到后台后超过间隔返回时重新加载开屏
-const unitId = "s1";
-BloomAd.showSplash(
-  interval,
-  {
-    onAdDismiss(params) {
-      // 广告被关闭
-      console.log(params);
-    },
-    onError(params) {
-      // 广告出错
-      console.log(params);
-    },
+BloomAd.showSplash({
+  unitId: "s1", // 广告位 id
+  time: interval,
+  onAdDismiss(params) {
+    // 广告被关闭
+    console.log(params);
   },
-  unitId
-);
+  onError(params) {
+    // 广告出错
+    console.log(params);
+  },
+});
 ```
 
 **强烈建议**：App 切到后台超过三分钟返回时加载开屏，以提升开屏广告的曝光量.
@@ -109,44 +115,42 @@ BloomAd.showSplash(
 使用接口调用，调用示例如下：
 
 ```javascript
-const unitId = "rv1";
-BloomAd.rewardVideo(
-  {
-    onAdLoad(params) {
-      // 广告加载成功
-      console.log(params);
-    },
-    onVideoCached(params) {
-      // 视频素材缓存成功
-      console.log(params);
-    },
-    onAdShow(params) {
-      // 广告页面展示
-      console.log(params);
-    },
-    onReward(params) {
-      // 广告激励发放
-      console.log(params);
-    },
-    onAdClick(params) {
-      // 广告被点击
-      console.log(params);
-    },
-    onVideoComplete(params) {
-      // 广告播放完毕
-      console.log(params);
-    },
-    onAdClose(params) {
-      // 广告被关闭
-      console.log(params);
-    },
-    onError(params) {
-      // 广告出错
-      console.log(params);
-    },
+BloomAd.rewardVideo({
+  unitId: "rv1", // 广告位 id
+  // showWhenCached: false, // 是否完全加载后才开始播放
+  onAdLoad(params) {
+    // 广告加载成功
+    console.log(params);
   },
-  unitId
-);
+  onVideoCached(params) {
+    // 视频素材缓存成功
+    console.log(params);
+  },
+  onAdShow(params) {
+    // 广告页面展示
+    console.log(params);
+  },
+  onReward(params) {
+    // 广告激励发放
+    console.log(params);
+  },
+  onAdClick(params) {
+    // 广告被点击
+    console.log(params);
+  },
+  onVideoComplete(params) {
+    // 广告播放完毕
+    console.log(params);
+  },
+  onAdClose(params) {
+    // 广告被关闭
+    console.log(params);
+  },
+  onError(params) {
+    // 广告出错
+    console.log(params);
+  },
+});
 ```
 
 ## 横幅广告接入
@@ -156,7 +160,7 @@ Banner 广告（横幅广告）位于 app 顶部、中部、底部任意一处�
 使用组件方式调试，调用示例如下：
 
 ```javascript
-const unitId = "b1";
+const unitId = "b1"; // 广告位 id
 <BannerView
   style={{
     width: 332,
@@ -186,13 +190,14 @@ params.type 说明：
 使用组件方式调试，调用示例如下：
 
 ```javascript
-const unitId = "n1";
+const unitId = "n1"; // 广告位 id
 <NativeExpress
   style={{
     width: 332,
     height: 200,
   }}
   unitId={unitId}
+  count={1} // 请求广告数量
   onChange={(params) => {
     console.log(params);
   }}
@@ -216,34 +221,30 @@ params.type 说明：
 使用接口调用，调用示例如下：
 
 ```javascript
-const width = 300; // 插屏广告广告宽度
-const unitId = "i1";
-BloomAd.interstitial(
-  width,
-  {
-    onAdLoad(params) {
-      // 广告加载成功
-      console.log(params);
-    },
-    onAdShow(params) {
-      // 广告页面展示
-      console.log(params);
-    },
-    onAdClick(params) {
-      // 广告被点击
-      console.log(params);
-    },
-    onAdClose(params) {
-      // 广告被关闭
-      console.log(params);
-    },
-    onError(params) {
-      // 广告出错
-      console.log(params);
-    },
+BloomAd.interstitial({
+  unitId: "i1", // 广告位 id
+  width: 300, // 插屏广告广告宽度
+  onAdLoad(params) {
+    // 广告加载成功
+    console.log(params);
   },
-  unitId
-);
+  onAdShow(params) {
+    // 广告页面展示
+    console.log(params);
+  },
+  onAdClick(params) {
+    // 广告被点击
+    console.log(params);
+  },
+  onAdClose(params) {
+    // 广告被关闭
+    console.log(params);
+  },
+  onError(params) {
+    // 广告出错
+    console.log(params);
+  },
+});
 ```
 
 ## Draw 视频广告接入
@@ -253,7 +254,7 @@ BloomAd.interstitial(
 使用组件方式调试，调用示例如下：
 
 ```javascript
-const unitId = "dv1";
+const unitId = "dv1"; // 广告位 id
 <DrawVideo
   style={{
     width: "100%",
@@ -261,6 +262,7 @@ const unitId = "dv1";
     position: "absolute",
   }}
   unitId={unitId}
+  count={1} // 请求广告数量
   onChange={(params) => {
     console.log(params);
   }}

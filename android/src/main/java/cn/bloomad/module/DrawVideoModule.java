@@ -26,7 +26,8 @@ public class DrawVideoModule extends EventModule {
     public void threadAction(Activity mActivity, Map params) {
         final ViewGroup viewGroup = (ViewGroup) params.get("viewGroup");
         String unitId = params.get("unitId").toString();
-        AdSdk.getInstance().loadDrawVideoAd(mActivity, unitId, 1, new AdSdk.DrawVideoAdListener() {
+        int count = (int) (double)(params.get("count"));
+        AdSdk.getInstance().loadDrawVideoAd(mActivity, unitId, count, new AdSdk.DrawVideoAdListener() {
             @Override
             public void onAdLoad(List<AdSdk.DrawVideoAd> ads) {
                 Log.d(TAG, "DrawVideoAd onAdLoad");

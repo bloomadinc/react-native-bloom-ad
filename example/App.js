@@ -81,13 +81,9 @@ function SettingsScreen() {
         <View style={styles.buttonItem}>
           <Button
             onPress={() => {
-              BloomAd.showSplash(ThreeMin, {
-                // onAdShow(params) {
-                //   console.log(params);
-                // },
-                // onAdClick(params) {
-                //   console.log(params);
-                // },
+              BloomAd.showSplash({
+                unitId: 's1',
+                time: ThreeMin,
                 onAdDismiss(params) {
                   // 广告被关闭
                   console.log(params);
@@ -105,6 +101,8 @@ function SettingsScreen() {
           <Button
             onPress={() => {
               BloomAd.rewardVideo({
+                unitId: 'rv1',
+                showWhenCached: false,
                 onAdLoad(params) {
                   // 广告加载成功
                   console.log(params);
@@ -172,8 +170,9 @@ function SettingsScreen() {
             <NativeExpress
               style={{
                 width: 332,
-                height: 200,
+                height: 600,
               }}
+              count={3}
               onChange={(params) => {
                 console.log(params);
               }}
@@ -184,7 +183,9 @@ function SettingsScreen() {
         <View style={styles.buttonItem}>
           <Button
             onPress={() => {
-              BloomAd.interstitial(300, {
+              BloomAd.interstitial({
+                unitId: 'i1',
+                width: 300,
                 onAdLoad(params) {
                   // 广告加载成功
                   console.log(params);
@@ -214,9 +215,6 @@ function SettingsScreen() {
         <View style={styles.buttonItem}>
           <Button
             onPress={() => {
-              this.setState({
-                showDraw: !this.state.showDraw,
-              });
               setShowDraw(!showDraw);
             }}
             title="Draw 视频广告"

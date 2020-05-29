@@ -29,12 +29,14 @@ function withComponent(WrappedComponent, selectData = {}) {
       }
 
       let unique = getEventName(selectData.name);
+      console.log("count:", typeof props.count);
 
       this.state = {
         width,
         height,
         unique,
         unitId: props.unitId || selectData.unitId,
+        count: props.count || 1,
       };
     }
     onChange = (event) => {

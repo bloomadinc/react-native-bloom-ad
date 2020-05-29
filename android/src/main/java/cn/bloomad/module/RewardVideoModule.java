@@ -19,7 +19,8 @@ public class RewardVideoModule extends EventModule {
     @Override
     public void threadAction(Activity mActivity, Map params) {
         String unitId = params.get("unitId").toString();
-        AdSdk.getInstance().loadRewardVideoAd(mActivity, unitId, false,
+        String showWhenCached = params.get("showWhenCached").toString();
+        AdSdk.getInstance().loadRewardVideoAd(mActivity, unitId, showWhenCached == "1",
                 new AdSdk.RewardVideoAdListener() {
                     @Override
                     public void onAdLoad(String id) {

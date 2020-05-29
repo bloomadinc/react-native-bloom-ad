@@ -22,9 +22,11 @@ public class NativeExpressModule extends EventModule {
     @Override
     public void threadAction(final Activity mActivity, Map params) {
         final ViewGroup viewGroup = (ViewGroup) params.get("viewGroup");
-        final float width = Float.parseFloat(params.get("width").toString());
+        final float width = (float) (double)params.get("width");
         String unitId = params.get("unitId").toString();
-        AdSdk.getInstance().loadNativeExpressAd(mActivity, unitId, width, 1,
+        int count = (int) (double)(params.get("count"));
+//        Log.v(TAG, "width:" + String.valueOf(width) + ",count:" + String.valueOf(count));
+        AdSdk.getInstance().loadNativeExpressAd(mActivity, unitId, width, count,
                 new AdSdk.NativeExpressAdListener() {
                     @Override
                     public void onAdLoad(List<AdSdk.NativeExpressAd> ads) {

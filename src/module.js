@@ -29,9 +29,9 @@ export default {
       }
     });
   },
-  setUserId(userId) {
+  setUserId(userId = "") {
     if (checkInit()) {
-      BloomAd.setUserId(userId);
+      BloomAd.setUserId(userId + "");
     }
   },
   baseModule(actionName, params, ...args) {
@@ -43,18 +43,23 @@ export default {
           params[data.type](data);
         }
       });
-      // console.log("args:", ...args);
       BloomAd[actionName](eventName, ...args);
       return emiter;
     }
   },
-  rewardVideo(params = {}, unitId = "rv1") {
-    return this.baseModule(REWAED_VIDEO, params, unitId);
-  },
-  showSplash(time = SplashTime, params = {}, unitId = "s1") {
+  showSplash(params = {}) {
+    const unitId = params.unitId || "s1";
+    const time = params.time || SplashTime;
     return this.baseModule(SHOW_SPLASH, params, time, unitId);
   },
-  interstitial(width = 300, params = {}, unitId = "i1") {
+  rewardVideo(params = {}) {
+    const unitId = params.unitId || "rv1";
+    const showWhenCached = params.showWhenCached || false;
+    return this.baseModule(REWAED_VIDEO, params, unitId, showWhenCached);
+  },
+  interstitial(params = {}) {
+    const unitId = params.unitId || "i1";
+    const width = params.width || 300;
     return this.baseModule(INTERSTITIAL, params, width, unitId);
   },
 };

@@ -72,7 +72,7 @@ public class BloomAdModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void setUserId(String userId, Promise promise) {
         try {
-            if (userId.length() > 0) {
+            if (userId != null && userId.length() > 0) {
                 AdSdk.getInstance().setUserId(userId);
             } else {
                 AdSdk.getInstance().setUserId(null);
@@ -84,11 +84,12 @@ public class BloomAdModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void rewardVideo(String name, String unitId) {
+    public void rewardVideo(String name, String unitId, Boolean showWhenCached) {
         mActivity = getCurrentActivity();
         RewardVideoModule rewardVideoModule = new RewardVideoModule(reactContext, mActivity, name);
         Map<String, String> map = new HashMap<String, String>();
         map.put("unitId",unitId);
+        map.put("showWhenCached", showWhenCached ? "1" : "0");
         rewardVideoModule.action(map);
     }
 
