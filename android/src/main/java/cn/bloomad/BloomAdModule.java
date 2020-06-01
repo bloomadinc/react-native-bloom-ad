@@ -8,14 +8,11 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.uimanager.IllegalViewOperationException;
-import com.linkin.adsdk.AdConfig;
 import com.linkin.adsdk.AdSdk;
-import com.linkin.videosdk.VideoConfig;
-import com.linkin.videosdk.VideoSdk;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.bloomad.module.InitModule;
 import cn.bloomad.module.InterstitialModule;
 import cn.bloomad.module.ModuleManager;
 import cn.bloomad.module.RewardVideoModule;
@@ -28,12 +25,16 @@ public class BloomAdModule extends ReactContextBaseJavaModule {
 
     public static Activity mActivity;
 
+    private InitModule initModule;
+
 
     public BloomAdModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
 
         moduleManager = ModuleManager.getInstance();
+
+        initModule = InitModule.getInstance();
     }
 
     @Override
@@ -44,24 +45,9 @@ public class BloomAdModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void init(String appId, Promise promise) {
         try {
+            mActivity = getCurrentActivity();
             // AdSdk 在 VideoSdk 之前初始化，视频流中才能展现广告
-            AdSdk.getInstance().init(reactContext,
-                    new AdConfig.Builder()
-                            .appId(appId)
-                            // .userId("uid") // 未登录可不设置 userId，登录时再设置
-                            .multiProcess(false)
-                            .debug(BuildConfig.DEBUG)
-                            .build(),
-                    null);
-
-            VideoSdk.getInstance().init(reactContext,
-                    new VideoConfig.Builder()
-                            .appId(appId)
-                            // .userId("uid") // 未登录可不设置 userId，登录时再设置
-                            .debug(BuildConfig.DEBUG)
-                            .build(),
-                    null);
-
+            initModule.init(mActivity, appId);
             promise.resolve(appId);
         } catch (IllegalViewOperationException e) {
             promise.reject(e);

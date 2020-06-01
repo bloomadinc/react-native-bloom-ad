@@ -24,7 +24,7 @@ function withComponent(WrappedComponent, selectData = {}) {
         width,
         height,
         unique,
-        appId: props.appId,
+        appId: props.appId || "",
       };
     }
     onChange = (event) => {

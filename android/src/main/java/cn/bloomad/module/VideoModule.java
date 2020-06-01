@@ -55,7 +55,9 @@ public class VideoModule extends EventModule {
         Log.d(TAG, "VideoModule threadAction:" + (null == fragment) + ":" + String.valueOf(viewGroup.getId()) + ",play:" + String.valueOf(play));
         if (null == fragment) {
 
-            initModule.init(mActivity, appId);
+            if(appId != null && appId.length() > 0){
+                initModule.init(mActivity, appId);
+            }
 
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                     FrameLayout.LayoutParams.MATCH_PARENT);
