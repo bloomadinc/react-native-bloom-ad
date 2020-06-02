@@ -18,6 +18,10 @@ AppId：应用程序 id，以 ba 开头的 18 位 hex 字符串，如 ba0063bfbc
 
 `$ yarn add react-native-bloom-ad --save`
 
+react native 版本号为 0.60 以下的需要手动 link
+
+`$ react-native link react-native-bloom-ad`
+
 ### 2、添加 Maven 仓库地址
 
 ```
