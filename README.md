@@ -74,7 +74,7 @@ BloomAd.setUserId("uid");
 退出登录请重置 userId：
 
 ```
-BloomAd.setUserId(null);
+BloomAd.setUserId();
 ```
 
 ## SDK 返回参数说明
