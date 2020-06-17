@@ -38,7 +38,7 @@ export default {
     if (checkInit()) {
       let eventName = getEventName(actionName);
       let emiter = eventEmitter.addListener(eventName, (data) => {
-        console.log(eventName, data);
+        // console.log(eventName, data);
         if (params[data.type]) {
           params[data.type](data);
         }
