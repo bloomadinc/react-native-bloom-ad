@@ -83,8 +83,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
 
-    implementation 'com.linkin.sdk:adsdk:1.4.2'
-    implementation 'com.linkin.sdk:videosdk:1.0.11'
+    implementation 'com.linkin.sdk:adsdk:1.4.4'
+    implementation 'com.linkin.sdk:videosdk:1.0.12'
 }
 
 def configureReactNativePom(def pom) {
