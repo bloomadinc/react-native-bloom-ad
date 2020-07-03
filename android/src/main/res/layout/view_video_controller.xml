@@ -41,7 +41,7 @@
             android:layout_gravity="bottom"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="25dp"
-            android:layout_marginBottom="88dp"
+            android:layout_marginBottom="15dp"
             android:orientation="horizontal">
 
             <LinearLayout
