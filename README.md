@@ -46,6 +46,7 @@ import BloomAd, {
   NativeExpress,
   DrawVideo,
   VideoStreaming,
+  NewsPortal,
 } from "react-native-bloom-ad";
 ```
 
@@ -326,3 +327,17 @@ params.type 说明：
 | onVideoComplete | 播放完成       |
 | onVideoError    | 播放出错       |
 | onLikeClick     | 点赞或取消点赞 |
+
+## 资讯接入
+
+开发者需要初始化 AppId 后才能使用相关功能。例如：
+
+```javascript
+<NewsPortal
+  appId="ba0063bfbc1a5ad878"
+  style={{
+    width: width,
+    height: height,
+  }}
+/>
+```

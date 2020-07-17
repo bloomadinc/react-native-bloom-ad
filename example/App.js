@@ -75,7 +75,6 @@ function NewsScreen() {
         style={{
           width: width,
           height: height,
-          backgroundColor: 'blue',
         }}
       />
     </View>
