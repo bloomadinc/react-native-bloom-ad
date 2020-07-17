@@ -18,6 +18,7 @@ import BloomAd, {
   NativeExpress,
   DrawVideo,
   VideoStreaming,
+  NewsPortal,
 } from 'react-native-bloom-ad';
 
 BloomAd.init('ba0063bfbc1a5ad878');
@@ -60,6 +61,21 @@ function HomeScreen() {
         play={play}
         onChange={(params) => {
           console.log('params', params);
+        }}
+      />
+    </View>
+  );
+}
+
+function NewsScreen() {
+  return (
+    <View style={styles.container}>
+      <NewsPortal
+        appId="ba0063bfbc1a5ad878"
+        style={{
+          width: width,
+          height: height,
+          backgroundColor: 'blue',
         }}
       />
     </View>
@@ -244,6 +260,7 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="News" component={NewsScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>

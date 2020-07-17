@@ -13,6 +13,7 @@ import java.util.List;
 import cn.bloomad.view.BannerViewManager;
 import cn.bloomad.view.DrawVideoManager;
 import cn.bloomad.view.NativeExpressManager;
+import cn.bloomad.view.NewsManager;
 import cn.bloomad.view.VideoManager;
 
 public class BloomAdPackage implements ReactPackage {
@@ -29,7 +30,7 @@ public class BloomAdPackage implements ReactPackage {
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
         return Arrays.<ViewManager>asList(new BannerViewManager(reactContext), new NativeExpressManager(reactContext),
-                new DrawVideoManager(reactContext), new VideoManager(reactContext));
+                new DrawVideoManager(reactContext), new VideoManager(reactContext), new NewsManager(reactContext));
     }
 
 }

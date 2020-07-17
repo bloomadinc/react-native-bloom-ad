@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.linkin.adsdk.AdConfig;
 import com.linkin.adsdk.AdSdk;
+import com.linkin.newssdk.NewsConfig;
+import com.linkin.newssdk.NewsSdk;
 import com.linkin.videosdk.VideoConfig;
 import com.linkin.videosdk.VideoSdk;
 
@@ -16,6 +18,7 @@ public class InitModule {
     private static final String TAG = InitModule.class.getSimpleName();
     private  static  boolean isAdInit = false;
     private static  boolean isVideoInit = false;
+    private static  boolean isNewsInit = false;
     //创建 SingleObject 的一个对象
     private static InitModule instance = new InitModule();
 
@@ -30,6 +33,7 @@ public class InitModule {
     public void init(Activity mActivity, String appId){
         initAd( mActivity,appId);
         initVideo(mActivity,appId);
+        initNews(mActivity,appId);
     }
 
     public void initAd(Activity mActivity, String appId){
@@ -49,4 +53,19 @@ public class InitModule {
             isVideoInit = true;
         }
     }
+
+
+    public void initNews(Activity mActivity, String appId){
+        if(!isNewsInit) {
+            NewsSdk.getInstance().init(mActivity,
+                    new NewsConfig.Builder()
+                            .appId(appId)
+//                            .userId("uid") // 未登录可不设置 userId，登录时再设置
+                            .debug(BuildConfig.DEBUG)
+                            .build(),
+                    null);
+            isNewsInit = true;
+        }
+    }
+
 }
