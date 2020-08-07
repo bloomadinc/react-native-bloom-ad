@@ -12,6 +12,7 @@ import React, {useState} from 'react';
 import {Platform, StyleSheet, Button, View, Dimensions} from 'react-native';
 import {NavigationContainer, useFocusEffect} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import BloomAd, {
   BannerView,
@@ -81,7 +82,21 @@ function NewsScreen() {
   );
 }
 
-function SettingsScreen() {
+function NewsPageScreen() {
+  return (
+    <View style={styles.container}>
+      <NewsPortal
+        appId="ba0063bfbc1a5ad878"
+        style={{
+          width: width,
+          height: height,
+        }}
+      />
+    </View>
+  );
+}
+
+function SettingsScreen({navigation}) {
   const [showBanner, setShowBanner] = useState(false);
   const [showNative, setShowNative] = useState(false);
   const [showDraw, setShowDraw] = useState(false);
@@ -235,6 +250,15 @@ function SettingsScreen() {
             title="Draw 视频广告"
           />
         </View>
+
+        <View style={styles.buttonItem}>
+          <Button
+            onPress={() => {
+              navigation.navigate('NewsPage');
+            }}
+            title="news页面"
+          />
+        </View>
       </View>
       {showDraw && (
         <DrawVideo
@@ -252,6 +276,17 @@ function SettingsScreen() {
   );
 }
 
+const SettingsStack = createStackNavigator();
+
+function SettingsStackScreen() {
+  return (
+    <SettingsStack.Navigator>
+      <SettingsStack.Screen name="Settings" component={SettingsScreen} />
+      <SettingsStack.Screen name="NewsPage" component={NewsPageScreen} />
+    </SettingsStack.Navigator>
+  );
+}
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -260,7 +295,7 @@ export default function App() {
       <Tab.Navigator>
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="News" component={NewsScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen name="Settings" component={SettingsStackScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
