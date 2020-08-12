@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_reward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tool:text="+5"
+        tool:visibility="visible" />
+
+    <FrameLayout
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:background="@android:color/transparent"
+        android:orientation="vertical">
+
+        <!--【注意】这是 demo 的路径，别忘了替换哟 -->
+        <cn.bloomad.widget.DonutProgress
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            custom:donut_background_color="@android:color/white"
+            custom:donut_circle_starting_degree="-90"
+            custom:donut_finished_color="@color/colorPrimary"
+            custom:donut_finished_stroke_width="5dp"
+            custom:donut_progress="0"
+            custom:donut_text=""
+            custom:donut_unfinished_color="@android:color/white"
+            custom:donut_unfinished_stroke_width="5dp"
+            tool:donut_progress="60" />
+
+        <ImageView
+            android:id="@+id/iv_red_pack"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/circle_background"
+            android:gravity="center"
+            android:padding="7dp"
+            android:src="@mipmap/red_pack" />
+
+    </FrameLayout>
+</LinearLayout>
