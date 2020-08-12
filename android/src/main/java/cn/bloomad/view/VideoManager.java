@@ -9,8 +9,6 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 
 import java.util.HashMap;
 
-import javax.annotation.Nullable;
-
 import cn.bloomad.module.ModuleManager;
 import cn.bloomad.module.VideoModule;
 
@@ -25,7 +23,7 @@ public class VideoManager extends BaseViewManager {
     }
 
     @ReactProp(name = "size")
-    public void setSize(ContainerView containerView, @Nullable ReadableMap sizeReadable) {
+    public void setSize(ContainerView containerView, ReadableMap sizeReadable) {
         Activity mActivity = getActivity(mCallerContext);
         Log.d("VideoManager", "setSize" + sizeReadable.toString());
         if (sizeReadable != null && mActivity != null) {

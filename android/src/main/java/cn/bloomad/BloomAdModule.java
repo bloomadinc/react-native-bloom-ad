@@ -7,14 +7,17 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.IllegalViewOperationException;
 import com.linkin.adsdk.AdSdk;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import cn.bloomad.module.InitModule;
 import cn.bloomad.module.InterstitialModule;
 import cn.bloomad.module.ModuleManager;
+import cn.bloomad.module.NewsModule;
 import cn.bloomad.module.RewardVideoModule;
 import cn.bloomad.module.SplashModule;
 
@@ -74,7 +77,7 @@ public class BloomAdModule extends ReactContextBaseJavaModule {
         mActivity = getCurrentActivity();
         RewardVideoModule rewardVideoModule = new RewardVideoModule(reactContext, mActivity, name);
         Map<String, String> map = new HashMap<String, String>();
-        map.put("unitId",unitId);
+        map.put("unitId", unitId);
         map.put("showWhenCached", showWhenCached ? "1" : "0");
         rewardVideoModule.action(map);
     }
@@ -85,7 +88,7 @@ public class BloomAdModule extends ReactContextBaseJavaModule {
         InterstitialModule interstitialModule = new InterstitialModule(reactContext, mActivity, name);
         Map<String, String> map = new HashMap<String, String>();
         map.put("width", Float.toString(width));
-        map.put("unitId",unitId);
+        map.put("unitId", unitId);
         interstitialModule.action(map);
     }
 
@@ -96,11 +99,36 @@ public class BloomAdModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public void showSplash( String name,  int interval, String unitId) {
+    public void showSplash(String name, int interval, String unitId) {
         mActivity = getCurrentActivity();
         Log.d(TAG, "showSplash:" + unitId);
         SplashModule splashModule = new SplashModule(reactContext, mActivity, name);
         splashModule.show(interval, unitId);
+    }
+
+    @ReactMethod
+    public void showNews(String unique, ReadableMap showReadable) {
+        NewsModule newsModule = (NewsModule) moduleManager.getInstance(unique);
+        if (newsModule != null) {
+            boolean isShow = showReadable.getBoolean("show");
+            Log.d("NewsManager", "isShow:" + String.valueOf(isShow));
+            int countdownSeconds = showReadable.getInt("countdownSeconds");
+            int scrollEffectSeconds = showReadable.getInt("scrollEffectSeconds");
+            int rewardData = showReadable.getInt("rewardData");
+            newsModule.setShow(isShow, countdownSeconds, scrollEffectSeconds, rewardData);
+        }
+    }
+
+    @ReactMethod
+    public void rewardNews(String unique, ReadableMap rewardReadable) {
+        NewsModule newsModule = (NewsModule) moduleManager.getInstance(unique);
+        if (newsModule != null) {
+            boolean isReward = rewardReadable.getBoolean("reward");
+            Log.d("VideoManager", "isReward:" + String.valueOf(isReward));
+            int rewardData = rewardReadable.getInt("rewardData");
+            newsModule.setReward(isReward, rewardData);
+        }
+
     }
 
 

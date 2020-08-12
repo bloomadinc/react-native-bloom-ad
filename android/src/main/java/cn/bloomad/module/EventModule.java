@@ -11,8 +11,6 @@ import com.linkin.adsdk.AdSdk;
 
 import java.util.Map;
 
-import javax.annotation.Nullable;
-
 public class EventModule {
     public String TAG = "bloomAdSdk";
 
@@ -36,7 +34,7 @@ public class EventModule {
         sendEvent(params);
     }
 
-    public void sendStatus(String type, @Nullable String id) {
+    public void sendStatus(String type, String id) {
         WritableMap params = Arguments.createMap();
         params.putString("type", type);
         params.putString("id", id);

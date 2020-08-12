@@ -19,8 +19,6 @@ import com.linkin.videosdk.VideoSdk;
 
 import java.util.Map;
 
-import javax.annotation.Nullable;
-
 import cn.bloomad.widget.VideoControllerView;
 
 public class VideoModule extends EventModule {
@@ -34,7 +32,7 @@ public class VideoModule extends EventModule {
         initModule = InitModule.getInstance();
     }
 
-    public void sendStatus(String type, @Nullable String id, @Nullable int videoType) {
+    public void sendStatus(String type, String id, int videoType) {
         WritableMap params = Arguments.createMap();
         params.putString("type", type);
         params.putString("id", id);

@@ -1,11 +1,13 @@
 package cn.bloomad.view;
 
 import android.app.Activity;
+
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.annotations.ReactProp;
+
 import java.util.HashMap;
-import javax.annotation.Nullable;
+
 import cn.bloomad.module.DrawVideoModule;
 import cn.bloomad.module.ModuleManager;
 
@@ -19,7 +21,7 @@ public class DrawVideoManager extends BaseViewManager {
     }
 
     @ReactProp(name = "size")
-    public void setSize(ContainerView containerView, @Nullable ReadableMap sizeReadable) {
+    public void setSize(ContainerView containerView, ReadableMap sizeReadable) {
         Activity mActivity = getActivity(mCallerContext);
         if (sizeReadable != null && mActivity != null) {
             // Log.i("Create View Instance", "setSize:" + sizeReadable.toString());

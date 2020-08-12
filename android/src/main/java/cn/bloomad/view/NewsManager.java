@@ -9,8 +9,6 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 
 import java.util.HashMap;
 
-import javax.annotation.Nullable;
-
 import cn.bloomad.module.ModuleManager;
 import cn.bloomad.module.NewsModule;
 
@@ -25,13 +23,13 @@ public class NewsManager extends BaseViewManager {
     }
 
     @ReactProp(name = "size")
-    public void setSize(ContainerView containerView, @Nullable ReadableMap sizeReadable) {
+    public void setSize(ContainerView containerView, ReadableMap sizeReadable) {
         Activity mActivity = getActivity(mCallerContext);
-        Log.d("VideoManager", "setSize" + sizeReadable.toString());
+        Log.d("NewsManager", "setSize" + sizeReadable.toString());
         if (sizeReadable != null && mActivity != null) {
             HashMap<String, Object> map = sizeReadable.toHashMap();
             map.put("viewGroup", containerView);
-            if(newsModule == null){
+            if (newsModule == null) {
                 String id = String.valueOf(containerView.getId());
                 String unique = sizeReadable.getString("unique");
                 newsModule = new NewsModule(mCallerContext, mActivity, id);

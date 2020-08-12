@@ -1,7 +1,13 @@
-import { requireNativeComponent, View, Text } from "react-native";
+import {
+  NativeModules,
+  requireNativeComponent,
+  View,
+  Text,
+} from "react-native";
 import React from "react";
 import { getEventName } from "./utils";
 
+const { BloomAd } = NativeModules;
 const NEWS_PORTAL = "NewsPortal";
 const BaseNewsPortal = requireNativeComponent(NEWS_PORTAL);
 
@@ -26,7 +32,35 @@ function withComponent(WrappedComponent, selectData = {}) {
         unique,
         appId: props.appId || "",
       };
+
+      this.newsFun = {
+        showNews: (param) => {
+          BloomAd.showNews(unique, {
+            show: param.show || false,
+            countdownSeconds: param.countdownSeconds || 10,
+            scrollEffectSeconds: param.scrollEffectSeconds || 3,
+            rewardData: param.rewardData || 1,
+          });
+        },
+        rewardNews: (param) => {
+          BloomAd.rewardNews(unique, {
+            reward: param.reward || true,
+            rewardData: param.rewardData || 1,
+          });
+        },
+      };
     }
+
+    onChange = (event) => {
+      // console.log(event.nativeEvent);
+      if (!this.props.onChange) {
+        return;
+      }
+      this.props.onChange(
+        event.nativeEvent,
+        Object.assign(event, this.newsFun)
+      );
+    };
 
     componentWillUnmount = () => {};
     render() {
@@ -47,6 +81,7 @@ function withComponent(WrappedComponent, selectData = {}) {
               unique: this.state.unique,
               appId: this.state.appId,
             }}
+            onChange={this.onChange}
           />
         </View>
       );

@@ -61,7 +61,7 @@ function HomeScreen() {
         }}
         play={play}
         onChange={(params) => {
-          console.log('params', params);
+          // console.log('params', params);
         }}
       />
     </View>
@@ -69,6 +69,9 @@ function HomeScreen() {
 }
 
 function NewsScreen() {
+  const [show, setShow] = useState(false);
+  const [reward, setReward] = useState(false);
+
   return (
     <View style={styles.container}>
       <NewsPortal
@@ -76,6 +79,22 @@ function NewsScreen() {
         style={{
           width: width,
           height: height,
+        }}
+        onChange={(params, event) => {
+          // console.log('params', params.type);
+          if (params.type === 'onReadingStart') {
+            event.showNews({
+              show: true,
+              countdownSeconds: 10,
+              scrollEffectSeconds: 3,
+              rewardData: 5,
+            });
+          } else if (params.type === 'onReward') {
+            event.rewardNews({
+              reward: true,
+              rewardData: 5,
+            });
+          }
         }}
       />
     </View>
