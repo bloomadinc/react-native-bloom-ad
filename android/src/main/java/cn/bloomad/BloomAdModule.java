@@ -110,12 +110,10 @@ public class BloomAdModule extends ReactContextBaseJavaModule {
     public void showNews(String unique, ReadableMap showReadable) {
         NewsModule newsModule = (NewsModule) moduleManager.getInstance(unique);
         if (newsModule != null) {
-            boolean isShow = showReadable.getBoolean("show");
-            Log.d("NewsManager", "isShow:" + String.valueOf(isShow));
             int countdownSeconds = showReadable.getInt("countdownSeconds");
             int scrollEffectSeconds = showReadable.getInt("scrollEffectSeconds");
             int rewardData = showReadable.getInt("rewardData");
-            newsModule.setShow(isShow, countdownSeconds, scrollEffectSeconds, rewardData);
+            newsModule.setShow(countdownSeconds, scrollEffectSeconds, rewardData);
         }
     }
 
@@ -124,7 +122,6 @@ public class BloomAdModule extends ReactContextBaseJavaModule {
         NewsModule newsModule = (NewsModule) moduleManager.getInstance(unique);
         if (newsModule != null) {
             boolean isReward = rewardReadable.getBoolean("reward");
-            Log.d("VideoManager", "isReward:" + String.valueOf(isReward));
             int rewardData = rewardReadable.getInt("rewardData");
             newsModule.setReward(isReward, rewardData);
         }

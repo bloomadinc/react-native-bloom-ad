@@ -134,22 +134,17 @@ public class NewsModule extends EventModule {
                 event);
     }
 
-    public void setShow(boolean isShow, final int countdownSeconds, final int scrollEffectSeconds, final Object rewardData) {
+    public void setShow(final int countdownSeconds, final int scrollEffectSeconds, final Object rewardData) {
         Log.d(TAG, "updateReward");
         if (mActivity != null) {
-            if (isShow) {
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (readingCountdownHandler != null) {
-                            readingCountdownHandler.startCountdown(countdownSeconds, scrollEffectSeconds, rewardData);
-                        }
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (readingCountdownHandler != null) {
+                        readingCountdownHandler.startCountdown(countdownSeconds, scrollEffectSeconds, rewardData);
                     }
-                });
-            } else {
-                setReadingCountdownHandler(null);
-                setReadingRewardHandler(null);
-            }
+                }
+            });
         } else {
             Log.d(TAG, "noActivity");
             sendStatus("noActivity", null);

@@ -36,7 +36,6 @@ function withComponent(WrappedComponent, selectData = {}) {
       this.newsFun = {
         showNews: (param) => {
           BloomAd.showNews(unique, {
-            show: param.show || false,
             countdownSeconds: param.countdownSeconds || 10,
             scrollEffectSeconds: param.scrollEffectSeconds || 3,
             rewardData: param.rewardData || 1,
@@ -44,7 +43,7 @@ function withComponent(WrappedComponent, selectData = {}) {
         },
         rewardNews: (param) => {
           BloomAd.rewardNews(unique, {
-            reward: param.reward || true,
+            reward: param.reward || false,
             rewardData: param.rewardData || 1,
           });
         },

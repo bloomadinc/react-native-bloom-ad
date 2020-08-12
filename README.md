@@ -339,5 +339,21 @@ params.type 说明：
     width: width,
     height: height,
   }}
+  onChange={(params, event) => {
+    // 资讯状态
+    if (params.type === "onReadingStart") {
+      event.showNews({
+        // 开始倒计时
+        countdownSeconds: 10, // 倒计时长
+        scrollEffectSeconds: 3, // 滚动有效时间
+      });
+    } else if (params.type === "onReward") {
+      event.rewardNews({
+        // 倒计时结束 发送奖励
+        reward: true, // 是否奖励
+        rewardData: 5, // 奖励数据 int
+      });
+    }
+  }}
 />
 ```

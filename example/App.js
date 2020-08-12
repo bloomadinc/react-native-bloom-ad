@@ -84,7 +84,6 @@ function NewsScreen() {
           // console.log('params', params.type);
           if (params.type === 'onReadingStart') {
             event.showNews({
-              show: true,
               countdownSeconds: 10,
               scrollEffectSeconds: 3,
               rewardData: 5,
