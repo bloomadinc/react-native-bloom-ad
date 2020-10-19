@@ -7,7 +7,7 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.linkin.adsdk.AdSdk;
+import com.mob.adsdk.AdSdk;
 
 import java.util.Map;
 
@@ -42,6 +42,15 @@ public class EventModule {
         sendEvent(params);
     }
 
+    public void sendStatus(String type, String id, int videoType) {
+        WritableMap params = Arguments.createMap();
+        params.putString("type", type);
+        params.putString("id", id);
+        params.putInt("videoType", videoType);
+        Log.d(TAG, eventName + ":" + type);
+        sendEvent(params);
+    }
+
     public void sendEvent(WritableMap params) {
         mReactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
     }
@@ -57,7 +66,7 @@ public class EventModule {
             });
         } else {
             Log.d(TAG, "noActivity");
-            sendStatus("noActivity", null);
+            sendStatus("noActivity", null, 0);
         }
     }
 

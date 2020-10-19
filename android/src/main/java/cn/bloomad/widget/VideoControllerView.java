@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
-import com.linkin.videosdk.AbstractVideoControllerView;
+import com.mob.videosdk.AbstractVideoControllerView;
 
 import cn.bloomad.R;
 

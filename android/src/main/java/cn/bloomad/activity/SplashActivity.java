@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 
-import com.linkin.adsdk.AdSdk;
+import com.mob.adsdk.AdSdk;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class SplashActivity extends Activity {
 
         Intent intent = getIntent();
         String uid = intent.getStringExtra("unitId");
-        if(uid != null && uid.length() > 0){
+        if (uid != null && uid.length() > 0) {
             unitId = uid;
         } else {
             unitId = "s1";

@@ -14,8 +14,8 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
-import com.linkin.videosdk.DrawVideoFragment;
-import com.linkin.videosdk.VideoSdk;
+import com.mob.videosdk.DrawVideoFragment;
+import com.mob.videosdk.VideoSdk;
 
 import java.util.Map;
 
@@ -53,7 +53,7 @@ public class VideoModule extends EventModule {
         Log.d(TAG, "VideoModule threadAction:" + (null == fragment) + ":" + String.valueOf(viewGroup.getId()) + ",play:" + String.valueOf(play));
         if (null == fragment) {
 
-            if(appId != null && appId.length() > 0){
+            if (appId != null && appId.length() > 0) {
                 initModule.init(mActivity, appId);
             }
 

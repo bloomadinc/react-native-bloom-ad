@@ -14,8 +14,8 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
-import com.linkin.newssdk.NewsPortalFragment;
-import com.linkin.newssdk.NewsSdk;
+import com.mob.newssdk.NewsPortalFragment;
+import com.mob.newssdk.NewsSdk;
 
 import java.util.Map;
 
@@ -36,8 +36,9 @@ public class NewsModule extends EventModule {
         initModule = InitModule.getInstance();
     }
 
-    public void sendStatus(String type, String newsUrl, int newsType) {
+    public void sendStatus(String type, String id, String newsUrl, int newsType) {
         WritableMap params = Arguments.createMap();
+        params.putString("id", id);
         params.putString("type", type);
         params.putString("newsUrl", newsUrl);
         params.putString("newsType", String.valueOf(newsType));
@@ -89,41 +90,32 @@ public class NewsModule extends EventModule {
                 NewsSdk.getInstance().configReadingCountdown(CountdownView.class, layoutParams,
                         new NewsSdk.ReadingCountdownListener() {
                             @Override
-                            public void onReadingStart(NewsSdk.ReadingCountdownHandler handler, String newsUrl, int newsType) {
-//                                Log.d(TAG, "NewsModule onReadingStart");
+                            public void onReadingStart(NewsSdk.ReadingCountdownHandler handler, String id, String newsUrl, int newsType) {
                                 setReadingCountdownHandler(handler);
-                                sendStatus("onReadingStart", newsUrl, newsType);
+                                sendStatus("onReadingStart", id, newsUrl, newsType);
                             }
 
                             @Override
-                            public void onReadingPause(String newsUrl, int newsType) {
-//                                Log.d(TAG, "NewsModule onReadingPause");
-                                sendStatus("onReadingPause", newsUrl, newsType);
+                            public void onReadingPause(String id, String newsUrl, int newsType) {
+                                sendStatus("onReadingPause", id, newsUrl, newsType);
                             }
 
                             @Override
-                            public void onReadingResume(NewsSdk.ReadingCountdownHandler handler, String newsUrl, int newsType) {
-//                                Log.d(TAG, "NewsModule onReadingResume");
-                                sendStatus("onReadingResume", newsUrl, newsType);
+                            public void onReadingResume(NewsSdk.ReadingCountdownHandler handler, String id, String newsUrl, int newsType) {
+                                sendStatus("onReadingResume", id, newsUrl, newsType);
                             }
 
                             @Override
-                            public void onReward(NewsSdk.ReadingRewardHandler handler, String newsUrl, int newsType, Object rewardData) {
-//                                Log.d(TAG, "NewsModule onReward");
-                                // 在此发放奖励，并设置奖励结果
-//                                boolean success = true;
-//                                handler.setRewardResult(success, rewardData);
+                            public void onReward(NewsSdk.ReadingRewardHandler handler, String id, String newsUrl, int newsType, Object rewardData) {
                                 setReadingRewardHandler(handler);
-                                sendStatus("onReward", newsUrl, newsType);
+                                sendStatus("onReward", id, newsUrl, newsType);
                             }
 
                             @Override
-                            public void onReadingEnd(String newsUrl, int newsType) {
-//                                Log.d(TAG, "NewsModule onReadingEnd");
-                                sendStatus("onReadingEnd", newsUrl, newsType);
+                            public void onReadingEnd(String id, String newsUrl, int newsType) {
+                                sendStatus("onReadingEnd", id, newsUrl, newsType);
                             }
                         });
-
             }
         });
     }

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
-import com.linkin.adsdk.AdSdk;
+import com.mob.adsdk.AdSdk;
 
 import java.util.List;
 import java.util.Map;
@@ -22,9 +22,9 @@ public class NativeExpressModule extends EventModule {
     @Override
     public void threadAction(final Activity mActivity, Map params) {
         final ViewGroup viewGroup = (ViewGroup) params.get("viewGroup");
-        final float width = (float) (double)params.get("width");
+        final float width = (float) (double) params.get("width");
         String unitId = params.get("unitId").toString();
-        int count = (int) (double)(params.get("count"));
+        int count = (int) (double) (params.get("count"));
 //        Log.v(TAG, "width:" + String.valueOf(width) + ",count:" + String.valueOf(count));
         AdSdk.getInstance().loadNativeExpressAd(mActivity, unitId, width, count,
                 new AdSdk.NativeExpressAdListener() {

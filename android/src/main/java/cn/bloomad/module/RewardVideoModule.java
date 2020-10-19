@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.linkin.adsdk.AdSdk;
+import com.mob.adsdk.AdSdk;
 
 import java.util.Map;
-
-import cn.bloomad.module.EventModule;
 
 public class RewardVideoModule extends EventModule {
 
@@ -77,7 +75,7 @@ public class RewardVideoModule extends EventModule {
                         Log.d(TAG, "RewardVideoAd onError: code=" + code + ", message=" + message);
                         // Toast.makeText(activity, "【" + code + "】" + message,
                         // Toast.LENGTH_LONG).show();
-                        sendError( id, code, message);
+                        sendError(id, code, message);
                     }
                 });
 

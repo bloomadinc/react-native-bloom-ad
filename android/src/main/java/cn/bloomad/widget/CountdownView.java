@@ -10,7 +10,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.linkin.newssdk.AbstractCountdownView;
+import com.mob.newssdk.AbstractCountdownView;
 
 import cn.bloomad.R;
 

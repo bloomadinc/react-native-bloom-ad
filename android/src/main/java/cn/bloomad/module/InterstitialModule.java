@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.linkin.adsdk.AdSdk;
+import com.mob.adsdk.AdSdk;
 
 import java.util.Map;
 
@@ -51,7 +51,7 @@ public class InterstitialModule extends EventModule {
             public void onError(String id, int code, String message) {
                 Log.d(TAG, "InterstitialAd onError: code=" + code + ", message=" + message);
 
-                sendError( id, code, message);
+                sendError(id, code, message);
             }
         });
     }
