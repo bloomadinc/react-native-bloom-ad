@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.ViewGroup;
 
-import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
-import com.linkin.adsdk.AdSdk;
+import com.mob.adsdk.AdSdk;
 
 import java.util.List;
 import java.util.Map;
