@@ -1,6 +1,7 @@
 package cn.bloomad.module;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.mob.adsdk.AdConfig;
 import com.mob.adsdk.AdSdk;
@@ -28,24 +29,24 @@ public class InitModule {
         return instance;
     }
 
-    public void init(Activity mActivity, String appId) {
-        initAd(mActivity, appId);
-        initVideo(mActivity, appId);
-        initNews(mActivity, appId);
+    public void init(Context context, String appId) {
+        initAd(context, appId);
+        initVideo(context, appId);
+        initNews(context, appId);
     }
 
-    public void initAd(Activity mActivity, String appId) {
+    public void initAd(Context context, String appId) {
         if (!isAdInit) {
-            AdSdk.getInstance().init(mActivity, new AdConfig.Builder().appId(appId)
+            AdSdk.getInstance().init(context, new AdConfig.Builder().appId(appId)
                     // .userId("uid") // 未登录可不设置 userId，登录时再设置
                     .multiProcess(false).debug(BuildConfig.DEBUG).build(), null);
             isAdInit = true;
         }
     }
 
-    public void initVideo(Activity mActivity, String appId) {
+    public void initVideo(Context context, String appId) {
         if (!isVideoInit) {
-            VideoSdk.getInstance().init(mActivity, new VideoConfig.Builder().appId(appId)
+            VideoSdk.getInstance().init(context, new VideoConfig.Builder().appId(appId)
                     // .userId("uid") // 未登录可不设置 userId，登录时再设置
                     .debug(BuildConfig.DEBUG).build(), null);
             isVideoInit = true;
@@ -53,9 +54,9 @@ public class InitModule {
     }
 
 
-    public void initNews(Activity mActivity, String appId) {
+    public void initNews(Context context, String appId) {
         if (!isNewsInit) {
-            NewsSdk.getInstance().init(mActivity,
+            NewsSdk.getInstance().init(context,
                     new NewsConfig.Builder()
                             .appId(appId)
 //                            .userId("uid") // 未登录可不设置 userId，登录时再设置

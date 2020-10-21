@@ -21,7 +21,7 @@ import cn.bloomad.R;
 public class SplashActivity extends Activity {
 
     private static final String TAG = SplashActivity.class.getSimpleName();
-    private static final int SPLASH_LOAD_TIMEOUT = 5000;
+    private static final int SPLASH_LOAD_TIMEOUT = 8000;
     private static final int PERMISSIONS_REQUEST_CODE = 1024;
 
     private FrameLayout mContainer;

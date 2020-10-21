@@ -1,11 +1,11 @@
 package cn.bloomad;
 
-import com.facebook.react.bridge.ReactContext;
+import android.content.Context;
 
 import cn.bloomad.module.InitModule;
 
 public class AdConfigure {
-    public static void init(ReactContext context, String appId) {
-        InitModule.getInstance().init(context.getCurrentActivity(), appId);
+    public static void init(Context context, String appId) {
+        InitModule.getInstance().init(context, appId);
     }
 }
