@@ -2,6 +2,8 @@ package cn.bloomad.module;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.mob.adsdk.AdConfig;
 import com.mob.adsdk.AdSdk;
@@ -9,6 +11,7 @@ import com.mob.newssdk.NewsConfig;
 import com.mob.newssdk.NewsSdk;
 import com.mob.videosdk.VideoConfig;
 import com.mob.videosdk.VideoSdk;
+
 
 import cn.bloomad.BuildConfig;
 
@@ -29,10 +32,15 @@ public class InitModule {
         return instance;
     }
 
-    public void init(Context context, String appId) {
-        initAd(context, appId);
-        initVideo(context, appId);
-        initNews(context, appId);
+    public void init(final Context context,final String appId) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                initAd(context, appId);
+                initVideo(context, appId);
+                initNews(context, appId);
+            }
+        });
     }
 
     public void initAd(Context context, String appId) {
