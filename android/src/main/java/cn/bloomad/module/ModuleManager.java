@@ -30,11 +30,19 @@ public class ModuleManager {
     }
 
     public void remove(String name) {
-        if (map.containsKey(name)) {
-            Log.i(TAG, "remove" + name);
+        Log.i(TAG, "remove" + name);
+        if (has(name)) {
+            Log.i(TAG, "remove success");
             EventModule eventModule = map.get(name);
             eventModule.destroy();
             map.remove(name);
+        } else {
+            Log.i(TAG, "no name module");
         }
     }
+
+    public boolean has(String name){
+        return map.containsKey(name);
+    }
+
 }

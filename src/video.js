@@ -1,7 +1,8 @@
-import { requireNativeComponent, View, Text } from "react-native";
+import { requireNativeComponent, NativeModules , View } from "react-native";
 import React from "react";
 import { getEventName } from "./utils";
 
+const { BloomAd } = NativeModules;
 const VIDEO_STREAMING = "VideoStreaming";
 const BaseVideoStreaming = requireNativeComponent(VIDEO_STREAMING);
 
@@ -35,7 +36,9 @@ function withComponent(WrappedComponent, selectData = {}) {
       this.props.onChange(event.nativeEvent, event);
     };
 
-    componentWillUnmount = () => {};
+    componentWillUnmount = () => {
+      BloomAd.destroyView(this.state.unique);
+    };
     render() {
       // console.log("state", this.state, this.props);
       let play = true;

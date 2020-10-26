@@ -29,13 +29,14 @@ public class NewsManager extends BaseViewManager {
         if (sizeReadable != null && mActivity != null) {
             HashMap<String, Object> map = sizeReadable.toHashMap();
             map.put("viewGroup", containerView);
-            if (newsModule == null) {
-                String id = String.valueOf(containerView.getId());
-                String unique = sizeReadable.getString("unique");
-                newsModule = new NewsModule(mCallerContext, mActivity, id);
-                moduleManager.add(unique, newsModule);
+            String unique = sizeReadable.getString("unique");
+            if (moduleManager.has(unique)) {
+                newsModule = (NewsModule) moduleManager.getInstance(unique);
                 newsModule.action(map);
             } else {
+                String id = String.valueOf(containerView.getId());
+                newsModule = new NewsModule(mCallerContext, mActivity, id);
+                moduleManager.add(unique, newsModule);
                 newsModule.action(map);
             }
         }

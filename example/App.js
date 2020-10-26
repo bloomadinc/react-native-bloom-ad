@@ -277,6 +277,15 @@ function SettingsScreen({navigation}) {
             title="news页面"
           />
         </View>
+
+        <View style={styles.buttonItem}>
+          <Button
+            onPress={() => {
+              navigation.navigate('VideoStreaming');
+            }}
+            title="videoStreaming页面"
+          />
+        </View>
       </View>
       {showDraw && (
         <DrawVideo
@@ -296,11 +305,34 @@ function SettingsScreen({navigation}) {
 
 const SettingsStack = createStackNavigator();
 
+function VideoStreamingScreen() {
+  return (
+    <View style={styles.container}>
+      <VideoStreaming
+        appId="ba0063bfbc1a5ad878"
+        style={{
+          width: width,
+          height: height,
+          backgroundColor: 'blue',
+        }}
+        play={true}
+        onChange={(params) => {
+          // console.log('params', params);
+        }}
+      />
+    </View>
+  );
+}
+
 function SettingsStackScreen() {
   return (
     <SettingsStack.Navigator>
       <SettingsStack.Screen name="Settings" component={SettingsScreen} />
       <SettingsStack.Screen name="NewsPage" component={NewsPageScreen} />
+      <SettingsStack.Screen
+        name="VideoStreaming"
+        component={VideoStreamingScreen}
+      />
     </SettingsStack.Navigator>
   );
 }

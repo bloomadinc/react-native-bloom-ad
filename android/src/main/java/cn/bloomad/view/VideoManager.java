@@ -14,7 +14,7 @@ import cn.bloomad.module.VideoModule;
 
 public class VideoManager extends BaseViewManager {
     private static final String REACT_CLASS = "VideoStreaming";
-    private  VideoModule videoModule;
+    private VideoModule videoModule;
 
     public VideoManager(ReactApplicationContext reactContext) {
         super(reactContext, REACT_CLASS);
@@ -29,13 +29,14 @@ public class VideoManager extends BaseViewManager {
         if (sizeReadable != null && mActivity != null) {
             HashMap<String, Object> map = sizeReadable.toHashMap();
             map.put("viewGroup", containerView);
-            if(videoModule == null){
-                String id = String.valueOf(containerView.getId());
-                String unique = sizeReadable.getString("unique");
-                videoModule = new VideoModule(mCallerContext, mActivity, id);
-                moduleManager.add(unique, videoModule);
+            String unique = sizeReadable.getString("unique");
+            if (moduleManager.has(unique)) {
+                videoModule = (VideoModule) moduleManager.getInstance(unique);
                 videoModule.action(map);
             } else {
+                String id = String.valueOf(containerView.getId());
+                videoModule = new VideoModule(mCallerContext, mActivity, id);
+                moduleManager.add(unique, videoModule);
                 videoModule.action(map);
             }
         }
