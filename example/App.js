@@ -263,7 +263,7 @@ function SettingsScreen({navigation}) {
         <View style={styles.buttonItem}>
           <Button
             onPress={() => {
-              setShowDraw(!showDraw);
+              navigation.navigate('DrawVideoPage');
             }}
             title="Draw 视频广告"
           />
@@ -305,6 +305,27 @@ function SettingsScreen({navigation}) {
 
 const SettingsStack = createStackNavigator();
 
+function DrawVideoScreen({navigation}) {
+  return (
+    <View
+      style={styles.main}
+      onLayout={(event) => {
+        // this.setWindow(event.nativeEvent);
+      }}>
+      <DrawVideo
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+        }}
+        onChange={(params) => {
+          console.log(params);
+        }}
+      />
+    </View>
+  );
+}
+
 function VideoStreamingScreen() {
   return (
     <View style={styles.container}>
@@ -328,6 +349,7 @@ function SettingsStackScreen() {
   return (
     <SettingsStack.Navigator>
       <SettingsStack.Screen name="Settings" component={SettingsScreen} />
+      <SettingsStack.Screen name="DrawVideoPage" component={DrawVideoScreen} />
       <SettingsStack.Screen name="NewsPage" component={NewsPageScreen} />
       <SettingsStack.Screen
         name="VideoStreaming"
