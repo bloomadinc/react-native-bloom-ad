@@ -7,15 +7,5 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
-        <provider
-            android:name="com.qq.e.GFileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/gdt_file_path" />
-        </provider>
     </application>
-
 </manifest>

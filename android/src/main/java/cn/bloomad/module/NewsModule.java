@@ -16,6 +16,7 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.mob.newssdk.NewsPortalFragment;
 import com.mob.newssdk.NewsSdk;
+import com.mob.videosdk.DrawVideoFragment;
 
 import java.util.Map;
 
@@ -57,7 +58,7 @@ public class NewsModule extends EventModule {
     @SuppressLint("ResourceType")
     @Override
     public void threadAction(Activity mActivity, Map params) {
-        final ViewGroup viewGroup = (ViewGroup) params.get("viewGroup");
+        final int reactNativeId = (int) params.get("reactNativeId");
         final String appId = (String) params.get("appId");
         final AppCompatActivity activity = (AppCompatActivity) mActivity;
         final FragmentManager fm = activity.getSupportFragmentManager();
@@ -65,59 +66,49 @@ public class NewsModule extends EventModule {
             initModule.init(mActivity, appId);
         }
 
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT);
-        FrameLayout newsContainer = new FrameLayout(activity);
-        newsContainer.setId(NEWS_FRAGMENT_ID);
+        mNewsPortalFragment = NewsPortalFragment.newInstance();
+        activity.getSupportFragmentManager().beginTransaction().replace(
+                reactNativeId, mNewsPortalFragment, String.valueOf(reactNativeId)
+        ).commitAllowingStateLoss();
 
-        viewGroup.addView(newsContainer, layoutParams);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                Gravity.BOTTOM | Gravity.END);
+        layoutParams.setMargins(0, 0,
+                DensityUtils.dip2px(activity, 8),
+                DensityUtils.dip2px(activity, 8));
 
-        viewGroup.post(new Runnable() {
-            @Override
-            public void run() {
-                mNewsPortalFragment = NewsPortalFragment.newInstance();
-                fm.beginTransaction().add(NEWS_FRAGMENT_ID, mNewsPortalFragment).commitAllowingStateLoss();
+        // 请按照设计修改 CountdownView 类，这里是 demo 给出的示例
+        NewsSdk.getInstance().configReadingCountdown(CountdownView.class, layoutParams,
+                new NewsSdk.ReadingCountdownListener() {
+                    @Override
+                    public void onReadingStart(NewsSdk.ReadingCountdownHandler handler, String id, String newsUrl, int newsType) {
+                        setReadingCountdownHandler(handler);
+                        sendStatus("onReadingStart", id, newsUrl, newsType);
+                    }
 
-                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.WRAP_CONTENT,
-                        FrameLayout.LayoutParams.WRAP_CONTENT,
-                        Gravity.BOTTOM | Gravity.END);
-                layoutParams.setMargins(0, 0,
-                        DensityUtils.dip2px(activity, 8),
-                        DensityUtils.dip2px(activity, 8));
+                    @Override
+                    public void onReadingPause(String id, String newsUrl, int newsType) {
+                        sendStatus("onReadingPause", id, newsUrl, newsType);
+                    }
 
-                // 请按照设计修改 CountdownView 类，这里是 demo 给出的示例
-                NewsSdk.getInstance().configReadingCountdown(CountdownView.class, layoutParams,
-                        new NewsSdk.ReadingCountdownListener() {
-                            @Override
-                            public void onReadingStart(NewsSdk.ReadingCountdownHandler handler, String id, String newsUrl, int newsType) {
-                                setReadingCountdownHandler(handler);
-                                sendStatus("onReadingStart", id, newsUrl, newsType);
-                            }
+                    @Override
+                    public void onReadingResume(NewsSdk.ReadingCountdownHandler handler, String id, String newsUrl, int newsType) {
+                        sendStatus("onReadingResume", id, newsUrl, newsType);
+                    }
 
-                            @Override
-                            public void onReadingPause(String id, String newsUrl, int newsType) {
-                                sendStatus("onReadingPause", id, newsUrl, newsType);
-                            }
+                    @Override
+                    public void onReward(NewsSdk.ReadingRewardHandler handler, String id, String newsUrl, int newsType, Object rewardData) {
+                        setReadingRewardHandler(handler);
+                        sendStatus("onReward", id, newsUrl, newsType);
+                    }
 
-                            @Override
-                            public void onReadingResume(NewsSdk.ReadingCountdownHandler handler, String id, String newsUrl, int newsType) {
-                                sendStatus("onReadingResume", id, newsUrl, newsType);
-                            }
-
-                            @Override
-                            public void onReward(NewsSdk.ReadingRewardHandler handler, String id, String newsUrl, int newsType, Object rewardData) {
-                                setReadingRewardHandler(handler);
-                                sendStatus("onReward", id, newsUrl, newsType);
-                            }
-
-                            @Override
-                            public void onReadingEnd(String id, String newsUrl, int newsType) {
-                                sendStatus("onReadingEnd", id, newsUrl, newsType);
-                            }
-                        });
-            }
-        });
+                    @Override
+                    public void onReadingEnd(String id, String newsUrl, int newsType) {
+                        sendStatus("onReadingEnd", id, newsUrl, newsType);
+                    }
+                });
     }
 
     @Override
@@ -158,5 +149,12 @@ public class NewsModule extends EventModule {
             Log.d(TAG, "noActivity");
             sendStatus("noActivity", null);
         }
+    }
+
+    @Override
+    public void destroy() {
+        AppCompatActivity activity = (AppCompatActivity) mActivity;
+        Log.d(TAG, "destroy");
+        activity.getSupportFragmentManager().beginTransaction().remove(mNewsPortalFragment).commitAllowingStateLoss();
     }
 }

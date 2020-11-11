@@ -4,41 +4,37 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.uimanager.annotations.ReactProp;
 
 import java.util.HashMap;
 
-import cn.bloomad.module.ModuleManager;
 import cn.bloomad.module.NewsModule;
 
-public class NewsManager extends BaseViewManager {
+public class NewsManager extends BaseFragmentManager {
+    private static final String TAG = NewsManager.class.getSimpleName();
     private static final String REACT_CLASS = "NewsPortal";
     private NewsModule newsModule;
 
     public NewsManager(ReactApplicationContext reactContext) {
         super(reactContext, REACT_CLASS);
-        mCallerContext = reactContext;
-        moduleManager = ModuleManager.getInstance();
     }
 
-    @ReactProp(name = "size")
-    public void setSize(ContainerView containerView, ReadableMap sizeReadable) {
+    @Override
+    public void attachFragment(int reactNativeId, String appId) {
         Activity mActivity = getActivity(mCallerContext);
-        Log.d("NewsManager", "setSize" + sizeReadable.toString());
-        if (sizeReadable != null && mActivity != null) {
-            HashMap<String, Object> map = sizeReadable.toHashMap();
-            map.put("viewGroup", containerView);
-            String unique = sizeReadable.getString("unique");
-            if (moduleManager.has(unique)) {
-                newsModule = (NewsModule) moduleManager.getInstance(unique);
-                newsModule.action(map);
+        if (mActivity != null) {
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            String moduleId = String.valueOf(reactNativeId);
+            Log.d("NewsManager", "reactNativeId:" + moduleId);
+            map.put("reactNativeId", reactNativeId);
+            map.put("appId", appId);
+            Log.i(TAG, "reactNativeId:" + moduleId);
+            if (moduleManager.has(moduleId)) {
+                newsModule = (NewsModule) moduleManager.getInstance(moduleId);
             } else {
-                String id = String.valueOf(containerView.getId());
-                newsModule = new NewsModule(mCallerContext, mActivity, id);
-                moduleManager.add(unique, newsModule);
-                newsModule.action(map);
+                newsModule = new NewsModule(mCallerContext, mActivity, moduleId);
+                moduleManager.add(moduleId, newsModule);
             }
+            newsModule.action(map);
         }
     }
 }

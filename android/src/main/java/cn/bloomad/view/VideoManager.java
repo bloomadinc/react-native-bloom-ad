@@ -2,6 +2,7 @@ package cn.bloomad.view;
 
 import android.app.Activity;
 import android.util.Log;
+import android.widget.FrameLayout;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableMap;
@@ -9,43 +10,46 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 
 import java.util.HashMap;
 
-import cn.bloomad.module.ModuleManager;
 import cn.bloomad.module.VideoModule;
 
-public class VideoManager extends BaseViewManager {
+public class VideoManager extends BaseFragmentManager {
+    private static final String TAG = VideoManager.class.getSimpleName();
     private static final String REACT_CLASS = "VideoStreaming";
     private VideoModule videoModule;
 
     public VideoManager(ReactApplicationContext reactContext) {
         super(reactContext, REACT_CLASS);
-        mCallerContext = reactContext;
-        moduleManager = ModuleManager.getInstance();
     }
 
-    @ReactProp(name = "size")
-    public void setSize(ContainerView containerView, ReadableMap sizeReadable) {
+    @Override
+    public void attachFragment(int reactNativeId, String appId) {
         Activity mActivity = getActivity(mCallerContext);
-        Log.d("VideoManager", "setSize" + sizeReadable.toString());
-        if (sizeReadable != null && mActivity != null) {
-            HashMap<String, Object> map = sizeReadable.toHashMap();
-            map.put("viewGroup", containerView);
-            String unique = sizeReadable.getString("unique");
-            if (moduleManager.has(unique)) {
-                videoModule = (VideoModule) moduleManager.getInstance(unique);
-                videoModule.action(map);
+        if (mActivity != null) {
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            String moduleId = String.valueOf(reactNativeId);
+            Log.d("VideoManager", "reactNativeId:" + moduleId );
+            map.put("reactNativeId", reactNativeId);
+            map.put("appId", appId);
+            Log.i(TAG, "reactNativeId:" + moduleId);
+            if (moduleManager.has(moduleId)) {
+                videoModule = (VideoModule) moduleManager.getInstance(moduleId);
             } else {
-                String id = String.valueOf(containerView.getId());
-                videoModule = new VideoModule(mCallerContext, mActivity, id);
-                moduleManager.add(unique, videoModule);
-                videoModule.action(map);
+                videoModule = new VideoModule(mCallerContext, mActivity, moduleId);
+                moduleManager.add(moduleId, videoModule);
             }
+            videoModule.action(map);
         }
     }
 
-    @ReactProp(name = "play", defaultBoolean = true)
-    public void setPlay(ContainerView containerView, boolean isPlay) {
-        Log.d("VideoManager", "setPlay:" + String.valueOf(isPlay));
-        if (videoModule != null) {
+
+    @ReactProp(name = "play")
+    public void setPlay(FrameLayout layout, ReadableMap map) {
+        Boolean isPlay = map.getBoolean("play");
+        int reactNativeId = map.getInt("reactNativeId");
+        String moduleId = String.valueOf(reactNativeId);
+        Log.d("VideoManager", "reactNativeId:" + moduleId + ",setPlay:" + String.valueOf(isPlay));
+        if (moduleManager.has(moduleId)) {
+            videoModule = (VideoModule) moduleManager.getInstance(moduleId);
             videoModule.playVideo(isPlay);
         }
     }

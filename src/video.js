@@ -1,6 +1,11 @@
-import { requireNativeComponent, NativeModules , View } from "react-native";
+import { 
+  requireNativeComponent, 
+  NativeModules, 
+  UIManager, 
+  findNodeHandle,
+  View 
+} from "react-native";
 import React from "react";
-import { getEventName } from "./utils";
 
 const { BloomAd } = NativeModules;
 const VIDEO_STREAMING = "VideoStreaming";
@@ -8,6 +13,8 @@ const BaseVideoStreaming = requireNativeComponent(VIDEO_STREAMING);
 
 function withComponent(WrappedComponent, selectData = {}) {
   return class extends React.Component {
+    nativeComponentRef;
+
     constructor(props) {
       super(props);
       let ratio = selectData.ratio || 1;
@@ -19,12 +26,9 @@ function withComponent(WrappedComponent, selectData = {}) {
         height = styleMap.height || width / ratio;
       }
 
-      let unique = getEventName(selectData.name);
-
       this.state = {
         width,
         height,
-        unique,
         appId: props.appId || "",
       };
     }
@@ -37,13 +41,29 @@ function withComponent(WrappedComponent, selectData = {}) {
     };
 
     componentWillUnmount = () => {
-      BloomAd.destroyView(this.state.unique);
+      BloomAd.destroyView(this.androidViewId.toString());
     };
+
+    componentDidMount(){
+      this.findId()
+    }
+
+    findId = () => {
+      const androidViewId = findNodeHandle(this.nativeComponentRef);
+      this.androidViewId = androidViewId
+      console.log("androidViewId", androidViewId)
+      UIManager.dispatchViewManagerCommand(
+        androidViewId,
+        UIManager.VideoStreaming.Commands.create.toString(),
+        [androidViewId, this.state.appId]
+      )
+    }
+
+
     render() {
-      // console.log("state", this.state, this.props);
-      let play = true;
-      if (this.props.hasOwnProperty("play")) {
-        play = this.props.play;
+      let play = true
+      if(typeof this.props.play === 'boolean'){
+        play = this.props.play
       }
       return (
         <View
@@ -57,13 +77,12 @@ function withComponent(WrappedComponent, selectData = {}) {
               width: this.state.width,
               height: this.state.height,
             }}
-            play={play}
-            size={{
-              play: play,
-              unique: this.state.unique,
-              appId: this.state.appId,
+            play={{
+              reactNativeId: this.androidViewId || 0,
+              play,
             }}
             onChange={this.onChange}
+            ref={(nativeRef) => this.nativeComponentRef = nativeRef}
           />
         </View>
       );

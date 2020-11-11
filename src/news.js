@@ -2,6 +2,8 @@ import {
   NativeModules,
   requireNativeComponent,
   View,
+  findNodeHandle,
+  UIManager,
   Text,
 } from "react-native";
 import React from "react";
@@ -13,6 +15,8 @@ const BaseNewsPortal = requireNativeComponent(NEWS_PORTAL);
 
 function withComponent(WrappedComponent, selectData = {}) {
   return class extends React.Component {
+    nativeComponentRef;
+    
     constructor(props) {
       super(props);
       let ratio = selectData.ratio || 1;
@@ -24,12 +28,9 @@ function withComponent(WrappedComponent, selectData = {}) {
         height = styleMap.height || width / ratio;
       }
 
-      let unique = getEventName(selectData.name);
-
       this.state = {
         width,
         height,
-        unique,
         appId: props.appId || "",
       };
 
@@ -61,7 +62,26 @@ function withComponent(WrappedComponent, selectData = {}) {
       );
     };
 
-    componentWillUnmount = () => {};
+    componentWillUnmount = () => {
+      // BloomAd.destroyView(this.androidViewId.toString());
+    };
+
+    componentDidMount(){
+      this.findId()
+    }
+
+    findId = () => {
+      const androidViewId = findNodeHandle(this.nativeComponentRef);
+      this.androidViewId = androidViewId
+      console.log("androidViewId", androidViewId)
+      UIManager.dispatchViewManagerCommand(
+        androidViewId,
+        UIManager.VideoStreaming.Commands.create.toString(),
+        [androidViewId, this.state.appId]
+      )
+    }
+
+
     render() {
       // console.log("state", this.state, this.props);
       return (
@@ -76,11 +96,8 @@ function withComponent(WrappedComponent, selectData = {}) {
               width: this.state.width,
               height: this.state.height,
             }}
-            size={{
-              unique: this.state.unique,
-              appId: this.state.appId,
-            }}
             onChange={this.onChange}
+            ref={(nativeRef) => this.nativeComponentRef = nativeRef}
           />
         </View>
       );
