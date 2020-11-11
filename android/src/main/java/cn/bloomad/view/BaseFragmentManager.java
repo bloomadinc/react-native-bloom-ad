@@ -75,7 +75,7 @@ public class BaseFragmentManager extends ViewGroupManager<FrameLayout> {
     }
 
     public void createFragment(FrameLayout parentLayout, int reactNativeId) {
-        View parentView = (ViewGroup)parentLayout.findViewById(reactNativeId).getParent();
+        View parentView = (ViewGroup)parentLayout.findViewById(reactNativeId);
         setupLayoutHack((ViewGroup) parentView);
     }
 
