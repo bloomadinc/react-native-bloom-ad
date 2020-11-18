@@ -1,6 +1,5 @@
 package cn.bloomad.module;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -44,26 +43,26 @@ public class InitModule {
     }
 
     public void initAd(Context context, String appId) {
-        if (!isAdInit) {
+//        if (!isAdInit) {
             AdSdk.getInstance().init(context, new AdConfig.Builder().appId(appId)
                     // .userId("uid") // 未登录可不设置 userId，登录时再设置
                     .multiProcess(false).debug(BuildConfig.DEBUG).build(), null);
             isAdInit = true;
-        }
+//        }
     }
 
     public void initVideo(Context context, String appId) {
-        if (!isVideoInit) {
+//        if (!isVideoInit) {
             VideoSdk.getInstance().init(context, new VideoConfig.Builder().appId(appId)
                     // .userId("uid") // 未登录可不设置 userId，登录时再设置
                     .debug(BuildConfig.DEBUG).build(), null);
             isVideoInit = true;
-        }
+//        }
     }
 
 
     public void initNews(Context context, String appId) {
-        if (!isNewsInit) {
+//        if (!isNewsInit) {
             NewsSdk.getInstance().init(context,
                     new NewsConfig.Builder()
                             .appId(appId)
@@ -72,7 +71,7 @@ public class InitModule {
                             .build(),
                     null);
             isNewsInit = true;
-        }
+//        }
     }
 
 }
