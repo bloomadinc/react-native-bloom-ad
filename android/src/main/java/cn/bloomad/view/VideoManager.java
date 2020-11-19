@@ -38,6 +38,7 @@ public class VideoManager extends BaseFragmentManager {
                 moduleManager.add(moduleId, videoModule);
             }
             videoModule.action(map);
+            videoModule.playVideo(true);
         }
     }
 
